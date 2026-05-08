@@ -14,9 +14,10 @@ export default function PDFDocument() {
     const { personalInfo, summary, sections } = CvData
     return (
         <article className="w-[210mm] min-h-[297mm] p-[15mm] bg-white border border-black">
-            <h1 className="text-[5.29mm] [font-family:Arial,sans-serif] font-semibold text-black text-center mb-[8px]">
+            <h1 className="text-[5.29mm] [font-family:Arial,sans-serif] font-semibold text-black text-center mb-0 uppercase tracking-wide">
                 {personalInfo.firstNames} {personalInfo.lastNames}
             </h1>
+            <p className="text-[16px] text-center mb-[8px] uppercase">{personalInfo.title}</p>
             <div className="text-[14px] text-center mb-[16px]">
                 <span className="after:content-[','] after:mr-[4px]">
                     {personalInfo.location}, {personalInfo.postalCode}, {personalInfo.country}

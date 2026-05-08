@@ -14,9 +14,18 @@ export function WorkExperienceSection({ title, entries }: { title: string; entri
                                 <span className="font-normal">{entry.location}</span>
                             </div>
                             <div className="mb-1">{entry.company}</div>
-                            <ul className="list-disc pl-5">
-                                {entry.description.map((item, j) => <li key={j}>{item}</li>)}
-                            </ul>
+                            {
+                                entry.description.length === 1 && (
+                                    <p>{entry.description[0]}</p>
+                                )
+                            }
+                            {
+                                entry.description.length > 1 && (
+                                    <ul className="list-disc pl-5">
+                                        {entry.description.map((item, j) => <li key={j}>{item}</li>)}
+                                    </ul>
+                                )
+                            }
                         </div>
                     </div>
                 ))}
