@@ -2,7 +2,7 @@ import { ExperienceItem } from '@/lib/schemas'
 import { SectionShell } from './SectionShell'
 import { Description } from './Description'
 
-export function WorkExperienceSection({ title, entries }: ExperienceItem) {
+export function ExperienceSection({ title, entries }: ExperienceItem) {
     return (
         <SectionShell title={title ?? ""}>
             <div className="flex flex-col gap-[16px]">

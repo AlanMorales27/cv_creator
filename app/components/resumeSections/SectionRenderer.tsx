@@ -1,12 +1,12 @@
-import type { Section } from './types'
-import { WorkExperienceSection } from './WorkExperienceSection'
+import { ExperienceSection } from './ExperienceSection'
 import { EducationSection } from './EducationSection'
 import { SkillsSection } from './SkillsSection'
+import type { SectionItem } from '@/lib/schemas';
 
-export function SectionRenderer({ section }: { section: Section }) {
+export function SectionRenderer({ section }: { section: SectionItem }) {
     switch (section.type) {
-        case 'work_experience': return <WorkExperienceSection {...section} />
-        case 'education':       return <EducationSection {...section} />
-        case 'skills':          return <SkillsSection {...section} />
+        case 'work_experience': return <ExperienceSection {...section} />
+        case 'education': return <EducationSection {...section} />
+        case 'skills': return <SkillsSection {...section} />
     }
 }
