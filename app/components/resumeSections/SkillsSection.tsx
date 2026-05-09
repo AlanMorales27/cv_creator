@@ -1,4 +1,4 @@
-import type { SkillsSection as SkillsSectionType } from "@/lib/schemas/SkillItemSchema";
+import type { Skillsitem as SkillsSectionType } from "@/lib/schemas/SkillItemSchema";
 
 export function SkillsSection({ title, categories, displayFormat = 'comma' }: SkillsSectionType) {
 

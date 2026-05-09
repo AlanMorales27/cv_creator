@@ -1,6 +1,6 @@
+import { SectionItem } from '@/lib/schemas';
 import { CvData } from '../../lib/cv_mock_data.js'
 import { SectionRenderer } from './resumeSections/SectionRenderer'
-import type { Section } from './resumeSections/types'
 
 function InLink({ text, url, last = false }: { text: string; url: string; last?: boolean }) {
     return (
@@ -33,7 +33,7 @@ export default function PDFDocument() {
                 <div className="w-[75%]">{summary}</div>
             </section>
 
-            {(sections as Section[]).map((section, i) => (
+            {(sections as SectionItem[]).map((section, i) => (
                 <SectionRenderer key={i} section={section} />
             ))}
         </article>

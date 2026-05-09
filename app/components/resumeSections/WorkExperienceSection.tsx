@@ -1,9 +1,10 @@
+import { ExperienceItem } from '@/lib/schemas'
 import { SectionShell } from './SectionShell'
-import type { WorkEntry } from './types'
+import { Description } from './Description'
 
-export function WorkExperienceSection({ title, entries }: { title: string; entries: WorkEntry[] }) {
+export function WorkExperienceSection({ title, entries }: ExperienceItem) {
     return (
-        <SectionShell title={title}>
+        <SectionShell title={title ?? ""}>
             <div className="flex flex-col gap-[16px]">
                 {entries.map((entry, i) => (
                     <div key={i} className="flex">
@@ -14,18 +15,7 @@ export function WorkExperienceSection({ title, entries }: { title: string; entri
                                 <span className="font-normal">{entry.location}</span>
                             </div>
                             <div className="mb-1">{entry.company}</div>
-                            {
-                                entry.description.length === 1 && (
-                                    <p>{entry.description[0]}</p>
-                                )
-                            }
-                            {
-                                entry.description.length > 1 && (
-                                    <ul className="list-disc pl-5">
-                                        {entry.description.map((item, j) => <li key={j}>{item}</li>)}
-                                    </ul>
-                                )
-                            }
+                            <Description items={entry.description} />
                         </div>
                     </div>
                 ))}

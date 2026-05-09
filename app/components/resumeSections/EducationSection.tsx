@@ -1,9 +1,10 @@
 import { SectionShell } from './SectionShell'
-import type { EducationEntry } from './types'
+import { Description } from './Description'
+import { EducationItem } from '@/lib/schemas'
 
-export function EducationSection({ title, entries }: { title: string; entries: EducationEntry[] }) {
+export function EducationSection({ title, entries }: EducationItem) {
     return (
-        <SectionShell title={title}>
+        <SectionShell title={title ?? ''}>
             <div className="flex flex-col gap-[16px]">
                 {entries.map((entry, i) => (
                     <div key={i} className="flex">
@@ -14,11 +15,9 @@ export function EducationSection({ title, entries }: { title: string; entries: E
                                 <span className="font-normal">{entry.location}</span>
                             </div>
                             <div className="font-semibold mb-1">{entry.degree}</div>
-                            {entry.description.length > 0 && (
-                                <ul className="list-disc pl-5">
-                                    {entry.description.map((item, j) => <li key={j}>{item}</li>)}
-                                </ul>
-                            )}
+                            { entry.description &&
+                                <Description items={entry.description} />
+                            }
                         </div>
                     </div>
                 ))}
