@@ -13,11 +13,8 @@ export function EducationSection({ title, entries }: { title: string; entries: E
                                 <span>{entry.institution}</span>
                                 <span className="font-normal">{entry.location}</span>
                             </div>
-                            <div className="mb-1">{entry.degree}</div>
-                            {entry.description.length === 1 && (
-                                <p>{entry.description[0]}</p>
-                            )}
-                            {entry.description.length > 1 && (
+                            <div className="font-semibold mb-1">{entry.degree}</div>
+                            {entry.description.length > 0 && (
                                 <ul className="list-disc pl-5">
                                     {entry.description.map((item, j) => <li key={j}>{item}</li>)}
                                 </ul>

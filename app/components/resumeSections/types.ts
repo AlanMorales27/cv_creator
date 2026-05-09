@@ -16,12 +16,17 @@ export type EducationEntry = {
     description: string[];
 }
 
+export type SkillItem = {
+    name: string;
+    level?: string;
+}
+
 export type SkillsCategory = {
     name: string;
-    items: string[];
+    items: (string | SkillItem)[];
 }
 
 export type Section =
     | { type: 'work_experience'; title: string; entries: WorkEntry[] }
     | { type: 'education';       title: string; entries: EducationEntry[] }
-    | { type: 'skills';          title: string; categories: SkillsCategory[] }
+    | { type: 'skills';          title: string; categories: SkillsCategory[]; displayFormat?: 'comma' | 'list' }
