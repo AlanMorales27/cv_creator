@@ -1,7 +1,6 @@
-import { SectionShell } from './SectionShell'
-import type { SkillsCategory } from './types'
+import type { SkillsSection as SkillsSectionType } from "@/lib/schemas/SkillItemSchema";
 
-export function SkillsSection({ title, categories, displayFormat = 'comma' }: { title: string; categories: SkillsCategory[]; displayFormat?: 'comma' | 'list' }) {
+export function SkillsSection({ title, categories, displayFormat = 'comma' }: SkillsSectionType) {
 
     const renderItem = (item: string | { name: string; level?: string }) => {
         if (typeof item === 'string') return item;
