@@ -1,9 +1,11 @@
 import { create } from 'zustand'
-import { CvShape } from '@/lib/schemas'
+import { CvShape, SectionItem } from '@/lib/schemas'
 import { CvData } from '../cv_mock_data'
 import { persist } from 'zustand/middleware'
 
-type CvStoreActions = {}
+type CvStoreActions = {
+    addSection: (section: SectionItem) => void,
+}
 
 type CvStoreState = CvShape & CvStoreActions
 
@@ -12,7 +14,10 @@ const useCvStore = create<CvStoreState>()(
         personalInfo: CvData.personalInfo,
         summary:      CvData.summary,
         sections:     CvData.sections,
-        actions: {},
+        
+        addSection: (section: SectionItem) => set(state => ({
+            sections: [...state.sections, section]
+        })),
     }),
         { name: 'cv' }
     )
