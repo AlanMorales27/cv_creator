@@ -1,6 +1,8 @@
+'use client'
+
 import { SectionItem } from '@/lib/schemas';
-import { CvData } from '../../lib/cv_mock_data.js'
 import { SectionRenderer } from './resumeSections/SectionRenderer'
+import useCvStore from '@/lib/store/cvStore';
 
 function InLink({ text, url, last = false }: { text: string; url: string; last?: boolean }) {
     return (
@@ -11,7 +13,11 @@ function InLink({ text, url, last = false }: { text: string; url: string; last?:
 }
 
 export default function PDFDocument() {
-    const { personalInfo, summary, sections } = CvData
+
+    const personalInfo = useCvStore((state)=>state.personalInfo)
+    const summary      = useCvStore((state)=>state.summary)
+    const sections     = useCvStore((state)=>state.sections)
+
     return (
         <article className="w-[210mm] min-h-[297mm] p-[15mm] bg-white border border-black">
             <h1 className="text-[5.29mm] [font-family:Arial,sans-serif] font-semibold text-black text-center mb-0 uppercase tracking-wide">
