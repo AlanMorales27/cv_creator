@@ -22,10 +22,31 @@ export default function PDFDocument() {
                 <span className="after:content-[','] after:mr-[4px]">
                     {personalInfo.location}, {personalInfo.postalCode}, {personalInfo.country}
                 </span>
-                <InLink text={personalInfo.phoneNumber} url={`tel:${personalInfo.phoneNumber}`} />
-                <InLink text={personalInfo.email} url={`mailto:${personalInfo.email}`} />
-                <InLink text="LinkedIn" url={personalInfo.linkedIn} />
-                <InLink text="GitHub" url={personalInfo.gitHub} last />
+                { personalInfo.phoneNumber &&
+                    <InLink
+                        text={personalInfo.phoneNumber}
+                        url={`tel:${personalInfo.phoneNumber}`}
+                    />
+                }
+                { personalInfo.email &&
+                    <InLink 
+                        text={personalInfo.email} 
+                        url={`mailto:${personalInfo.email}`} 
+                    />
+                }
+                { personalInfo.linkedIn &&
+                    <InLink 
+                        text="LinkedIn" 
+                        url={personalInfo.linkedIn} 
+                    />
+                }
+                { personalInfo.gitHub &&
+                    <InLink 
+                        text="GitHub" 
+                        url={personalInfo.gitHub} 
+                        last 
+                    />
+                }
             </div>
 
             <section className="flex border-t-2 border-black pt-[12px] pb-[16px] text-[14px]">

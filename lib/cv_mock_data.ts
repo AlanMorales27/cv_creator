@@ -1,4 +1,6 @@
-export const CvData = {
+import { CvShape } from "./schemas";
+
+export const CvData: CvShape = {
     personalInfo: {
         firstNames: "Alan Styllian",
         lastNames: "Morales Guevara",
@@ -124,8 +126,8 @@ export const CvData = {
                         { name: "Angular", level: "Avanzado" },
                         { name: "React.js", level: "Avanzado" },
                         { name: "Next.js", level: "Intermedio" },
-                        { name: "Flutter", level: "" },
-                        { name: "React Native", level: "" },
+                        { name: "Flutter" },
+                        { name: "React Native" },
                         { name: "Nest.js", level: "Básico" }
                     ]
                 },
