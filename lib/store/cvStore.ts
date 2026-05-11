@@ -6,6 +6,7 @@ import { persist } from 'zustand/middleware'
 type CvStoreActions = {
     addSection:         (section: SectionItem) => void,
     updatePersonalInfo: (info: PersonalItem) => void,
+    updateSummary:      (summary: string) => void,
 }
 
 type CvStoreState = CvShape & CvStoreActions
@@ -19,8 +20,8 @@ const useCvStore = create<CvStoreState>()(
         addSection: (section: SectionItem) => set(state => ({
             sections: [...state.sections, section]
         })),
-
         updatePersonalInfo: (info: PersonalItem) => set({ personalInfo: info }),
+        updateSummary:      (summary: string) => set({ summary }),
     }),
         { name: 'cv' }
     )
