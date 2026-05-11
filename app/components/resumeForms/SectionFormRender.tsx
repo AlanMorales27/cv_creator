@@ -2,6 +2,8 @@ import useCvStore from "@/lib/store/cvStore"
 import EducationForm from "./EducationForm"
 import WorkExperienceForm from "./WorkExperienceForm"
 import SkillsForm from "./SkillsForm"
+import PersonalInfoForm from "./PersonalInfoForm"
+import SummaryForm from "./SummaryForm"
 import {
     Accordion,
     AccordionContent,
@@ -21,8 +23,22 @@ export default function SectionFormRender() {
 
     return (
         <Accordion multiple className="w-full">
+            <AccordionItem value="personal_info">
+                <AccordionTrigger>INFORMACIÓN PERSONAL</AccordionTrigger>
+                <AccordionContent>
+                    <PersonalInfoForm />
+                </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="summary">
+                <AccordionTrigger>RESUMEN</AccordionTrigger>
+                <AccordionContent>
+                    <SummaryForm />
+                </AccordionContent>
+            </AccordionItem>
             {sections.map((section) => {
-                const label = section.title || sectionLabels[section.type] || section.type
+                const label = section.title || 
+                              sectionLabels[section.type] || 
+                              section.type
 
                 let form: React.ReactNode = null
                 switch (section.type) {
