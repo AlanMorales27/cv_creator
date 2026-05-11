@@ -7,6 +7,7 @@ type CvStoreActions = {
     addSection:         (section: SectionItem) => void,
     updatePersonalInfo: (info: PersonalItem) => void,
     updateSummary:      (summary: string) => void,
+    updateSection:      (id: number, data: SectionItem) => void,
 }
 
 type CvStoreState = CvShape & CvStoreActions
@@ -22,6 +23,10 @@ const useCvStore = create<CvStoreState>()(
         })),
         updatePersonalInfo: (info: PersonalItem) => set({ personalInfo: info }),
         updateSummary:      (summary: string) => set({ summary }),
+        
+        updateSection:      (id: number, data: SectionItem) => set(state => ({
+            sections: state.sections.map(s => s.id === id ? data : s)
+        })),
     }),
         { name: 'cv' }
     )

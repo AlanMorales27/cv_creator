@@ -11,6 +11,7 @@ export const SkillsCategorySchema = z.object({
 })
 
 export const SkillsItemSchema = z.object({
+    id:            z.number(),
     type:          z.literal('skills'),
     title:         z.string().optional(),
     displayFormat: z.enum(["comma", 'list']).optional(),

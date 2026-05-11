@@ -13,6 +13,7 @@ export default function Home() {
         <button onClick={() => {
         const state = useCvStore.getState();
         state.addSection({
+            id: Date.now(),
             type: "work_experience",
             title: "Work Experience",
             entries: [
