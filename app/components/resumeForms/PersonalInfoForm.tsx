@@ -1,17 +1,12 @@
 'use client'
 
-import { useEffect } from 'react'
-
-import { useForm } from 'react-hook-form'
-import { Input } from "@/components/ui/input"
-import {
-    Field,
-    FieldDescription,
-    FieldGroup,
-    FieldLabel,
-} from "@/components/ui/field"
 import useCvStore from '@/lib/store/cvStore'
+import { useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+
 import { PersonalItem } from '@/lib/schemas'
+import { FieldGroup } from "@/components/ui/field"
+import FormField from './FormField'
 
 export default function PersonalInfoForm() {
     const personalInfo        = useCvStore(state => state.personalInfo)
@@ -29,56 +24,67 @@ export default function PersonalInfoForm() {
     return (
         <>
             <FieldGroup>
-                <Field>
-                    <FieldLabel>First name(s)</FieldLabel>
-                    <Input type="text" placeholder="John Michael" {...register('firstNames')} />
-                </Field>
-
-                <Field>
-                    <FieldLabel>Last name(s)</FieldLabel>
-                    <Input type="text" placeholder="Doe Smith" {...register('lastNames')} />
-                </Field>
-
-                <Field>
-                    <FieldLabel>Professional Title</FieldLabel>
-                    <Input type="text" placeholder="Software Engineer" {...register('title')} />
-                </Field>
-
-                <Field>
-                    <FieldLabel>Location</FieldLabel>
-                    <Input type="text" placeholder="City, State" {...register('location')} />
-                </Field>
-
-                <Field>
-                    <FieldLabel>Postal Code</FieldLabel>
-                    <Input type="text" placeholder="12345" {...register('postalCode')} />
-                </Field>
-
-                <Field>
-                    <FieldLabel>Country</FieldLabel>
-                    <Input type="text" placeholder="United States" {...register('country')} />
-                </Field>
-
-                <Field>
-                    <FieldLabel>Phone Number</FieldLabel>
-                    <Input type="tel" placeholder="+1234567890" {...register('phoneNumber')} />
-                    <FieldDescription>International format (E.164)</FieldDescription>
-                </Field>
-
-                <Field>
-                    <FieldLabel>Email</FieldLabel>
-                    <Input type="email" placeholder="john@example.com" {...register('email')} />
-                </Field>
-
-                <Field>
-                    <FieldLabel>LinkedIn</FieldLabel>
-                    <Input type="url" placeholder="https://linkedin.com/in/johndoe" {...register('linkedIn')} />
-                </Field>
-
-                <Field>
-                    <FieldLabel>GitHub</FieldLabel>
-                    <Input type="url" placeholder="https://github.com/johndoe" {...register('gitHub')} />
-                </Field>
+                <div className='flex flex-row gap-2'>
+                    <FormField 
+                        label="First name(s)"
+                        type="text"
+                        placeholder="John Michael"
+                        {...register('firstNames')} 
+                    />
+                    <FormField 
+                        label="Last name(s)"
+                        type="text"
+                        placeholder="Doe Smith"
+                        {...register('lastNames')}
+                    />
+                </div>
+                <FormField 
+                    label="Professional Title"
+                    type="text"
+                    placeholder="Software Engineer"
+                    {...register('title')} 
+                />
+                <FormField 
+                    label="Location"
+                    type="text"
+                    placeholder="City, State"
+                    {...register('location')} 
+                />
+                <div className='flex flex-row gap-2'>
+                    <FormField 
+                        label="Postal Code"
+                        type="text"
+                        placeholder="12345"
+                        {...register('postalCode')} 
+                    />
+                    <FormField 
+                        label="Country"
+                        type="text"
+                        placeholder="United States"
+                        {...register('country')} 
+                    />
+                </div>
+                <FormField 
+                    label="Phone Number"
+                    type="tel"
+                    placeholder="+1234567890"
+                    description="International format (E.164)"
+                    {...register('phoneNumber')} />
+                <FormField 
+                    label="Email"
+                    type="email"
+                    placeholder="john@example.com"
+                    {...register('email')} />
+                <FormField 
+                    label="LinkedIn"
+                    type="url"
+                    placeholder="https://linkedin.com/in/johndoe"
+                    {...register('linkedIn')} />
+                <FormField 
+                    label="GitHub" 
+                    type="url" 
+                    placeholder="https://github.com/johndoe" 
+                    {...register('gitHub')} />
             </FieldGroup>
         </>
     )
