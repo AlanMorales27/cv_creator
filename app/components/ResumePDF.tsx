@@ -1,6 +1,8 @@
+'use client'
+
 import { SectionItem } from '@/lib/schemas';
-import { CvData } from '../../lib/cv_mock_data.js'
 import { SectionRenderer } from './resumeSections/SectionRenderer'
+import useCvStore from '@/lib/store/cvStore';
 
 function InLink({ text, url, last = false }: { text: string; url: string; last?: boolean }) {
     return (
@@ -11,7 +13,11 @@ function InLink({ text, url, last = false }: { text: string; url: string; last?:
 }
 
 export default function PDFDocument() {
-    const { personalInfo, summary, sections } = CvData
+
+    const personalInfo = useCvStore((state)=>state.personalInfo)
+    const summary      = useCvStore((state)=>state.summary)
+    const sections     = useCvStore((state)=>state.sections)
+
     return (
         <article className="w-[210mm] min-h-[297mm] p-[15mm] bg-white border border-black">
             <h1 className="text-[5.29mm] [font-family:Arial,sans-serif] font-semibold text-black text-center mb-0 uppercase tracking-wide">
@@ -22,10 +28,31 @@ export default function PDFDocument() {
                 <span className="after:content-[','] after:mr-[4px]">
                     {personalInfo.location}, {personalInfo.postalCode}, {personalInfo.country}
                 </span>
-                <InLink text={personalInfo.phoneNumber} url={`tel:${personalInfo.phoneNumber}`} />
-                <InLink text={personalInfo.email} url={`mailto:${personalInfo.email}`} />
-                <InLink text="LinkedIn" url={personalInfo.linkedIn} />
-                <InLink text="GitHub" url={personalInfo.gitHub} last />
+                { personalInfo.phoneNumber &&
+                    <InLink
+                        text={personalInfo.phoneNumber}
+                        url={`tel:${personalInfo.phoneNumber}`}
+                    />
+                }
+                { personalInfo.email &&
+                    <InLink 
+                        text={personalInfo.email} 
+                        url={`mailto:${personalInfo.email}`} 
+                    />
+                }
+                { personalInfo.linkedIn &&
+                    <InLink 
+                        text="LinkedIn" 
+                        url={personalInfo.linkedIn} 
+                    />
+                }
+                { personalInfo.gitHub &&
+                    <InLink 
+                        text="GitHub" 
+                        url={personalInfo.gitHub} 
+                        last 
+                    />
+                }
             </div>
 
             <section className="flex border-t-2 border-black pt-[12px] pb-[16px] text-[14px]">
