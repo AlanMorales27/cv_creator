@@ -1,6 +1,5 @@
 import useCvStore from "@/lib/store/cvStore"
-import EducationForm from "./EducationForm"
-import WorkExperienceForm from "./WorkExperienceForm"
+import EntrySectionForm from "./EntrySectionForm"
 import SkillsForm from "./SkillsForm"
 import PersonalInfoForm from "./PersonalInfoForm"
 import SummaryForm from "./SummaryForm"
@@ -43,10 +42,8 @@ export default function SectionFormRender() {
                 let form: React.ReactNode = null
                 switch (section.type) {
                     case 'work_experience':
-                        form = <WorkExperienceForm section={section} />
-                        break
                     case 'education':
-                        form = <EducationForm section={section} />
+                        form = <EntrySectionForm section={section} />
                         break
                     case 'skills':
                         form = <SkillsForm section={section} />
