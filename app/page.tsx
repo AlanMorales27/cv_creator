@@ -2,12 +2,15 @@
 
 import useCvStore from "@/lib/store/cvStore";
 import PDFDocument from "./components/ResumePDF";
+import ResumeEditForm from "./components/ResumeEditForm";
 
 export default function Home() {
   return (
-    <div>
+    <div className="flex flex-row gap-4">
       <PDFDocument></PDFDocument>
-      <button onClick={() => {
+      <div className="flex flex-col gap-2 w-[40%]">
+        <ResumeEditForm></ResumeEditForm>
+        <button onClick={() => {
         const state = useCvStore.getState();
         state.addSection({
             type: "work_experience",
@@ -23,7 +26,10 @@ export default function Home() {
               }
             ]
           })
-      }}>Add</button>
+      }}>
+        Add
+      </button>
+      </div>
     </div>
   );
 }
