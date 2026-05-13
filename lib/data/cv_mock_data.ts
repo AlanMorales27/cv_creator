@@ -1,4 +1,4 @@
-import { CvShape } from "./schemas";
+import { CvShape } from "../schemas";
 
 export const CvData: CvShape = {
     personalInfo: {

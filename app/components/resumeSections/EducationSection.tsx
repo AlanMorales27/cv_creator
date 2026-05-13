@@ -1,7 +1,7 @@
 import { SectionShell } from './SectionShell'
 import { Description } from './Description'
 import { EducationItem } from '@/lib/schemas'
-import { formatYearMonth } from '@/lib/utils'
+import { formatYearMonth } from '@/lib/helpers/utils'
 
 export function EducationSection({ title, entries }: EducationItem) {
     return (
@@ -16,7 +16,7 @@ export function EducationSection({ title, entries }: EducationItem) {
                                 <span className="font-normal">{entry.location}</span>
                             </div>
                             <div className="font-semibold mb-1">{entry.degree}</div>
-                            { entry.description &&
+                            {entry.description &&
                                 <Description items={entry.description} />
                             }
                         </div>

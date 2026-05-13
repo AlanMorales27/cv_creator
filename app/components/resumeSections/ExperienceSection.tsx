@@ -1,5 +1,5 @@
 import { ExperienceItem } from '@/lib/schemas'
-import { formatYearMonth } from '@/lib/utils'
+import { formatYearMonth } from '@/lib/helpers/utils'
 import { SectionShell } from './SectionShell'
 import { Description } from './Description'
 

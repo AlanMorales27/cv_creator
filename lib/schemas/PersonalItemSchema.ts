@@ -3,6 +3,8 @@ import z from "zod";
 export const PersonalItemSchema = z.object({
     firstNames:   z.string(),
     lastNames:    z.string(),
+    // Photo as base64 for canvas rendering
+    photo:        z.string().optional(),
     title:        z.string(),
     location:     z.string(),
     postalCode:   z.string(),
