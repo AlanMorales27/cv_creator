@@ -1,7 +1,6 @@
 import type { CvShape } from '@/lib/schemas'
 
 declare global {
-    // eslint-disable-next-line no-var
     var __cvPrintStore: Map<string, CvShape> | undefined
 }
 
