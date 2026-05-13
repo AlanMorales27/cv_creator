@@ -8,7 +8,7 @@ export function SkillsSection({ title, categories, displayFormat = 'comma' }: Sk
     };
 
     return (
-        <section className="flex border-t-2 border-black pt-[12px] pb-[16px] text-[14px]">
+        <section className="flex border-t-[1px] border-black pt-[12px] pb-[16px] text-[14px]">
             <div className="w-[25%] uppercase mb-4 pr-2">{title}</div>
             <div className="w-[75%] flex flex-col gap-[12px]">
                 {categories.map((cat, i) => (
