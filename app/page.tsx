@@ -1,13 +1,14 @@
 'use client'
 
 import useCvStore from "@/lib/store/cvStore";
-import PDFDocument from "./components/ResumePDF";
+import ResumePDFClient from "./components/ResumePDFClient";
 import ResumeEditForm from "./components/ResumeEditForm";
+import DownloadCvButton from "./components/DownloadCvButton";
 
 export default function Home() {
   return (
     <div className="flex flex-row gap-4">
-      <PDFDocument></PDFDocument>
+      <ResumePDFClient />
       <div className="flex flex-col gap-2 w-[40%]">
         <ResumeEditForm></ResumeEditForm>
         <button onClick={() => {
@@ -30,9 +31,7 @@ export default function Home() {
       }}>
         Add
       </button>
-        <button>
-          Download cv
-        </button>
+      <DownloadCvButton></DownloadCvButton>
       </div>
     </div>
   );
