@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 import { PersonalItem } from '@/lib/schemas'
 import { FieldGroup } from "@/components/ui/field"
 import FormField from './FormField'
+import { photoFileToBase64 } from '@/lib/helpers/photoUtils'
 
 export default function PersonalInfoForm() {
     const personalInfo        = useCvStore(state => state.personalInfo)
@@ -20,10 +21,39 @@ export default function PersonalInfoForm() {
         })
         return () => subscription.unsubscribe()
     }, [watch])
+    
+    const handlePhotoChange = async (
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        try {
+            const file = e.target.files?.[0]
+            if (!file) {
+                throw new Error('No photo selected')
+            }
+            const base64 = await photoFileToBase64({ file })
+            
+            if (!base64 || base64.length === 0) {
+                throw new Error('Base64 is empty')
+            }``
 
+            updatePersonalInfo({...personalInfo, photo: base64})
+        } catch (error) {
+            console.error(error)
+        }
+    }
     return (
         <>
             <FieldGroup>
+                <div>
+                    <FormField
+                        label="Upload your photo"
+                        type='file'
+                        accept='image/*'
+                        onChange={handlePhotoChange}
+                    >
+                    </FormField>
+                    {/* Add photo preview */}
+                </div>
                 <div className='flex flex-row gap-2'>
                     <FormField 
                         label="First name(s)"

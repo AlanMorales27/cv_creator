@@ -48,10 +48,11 @@ export async function photoFileToBase64(
         return base64
     }
     catch (error) {
-        throw new Error(
+        console.error(
             `Error getting the base64 from the file: 
                 ${error}`
         )
+        return ''
     }
     finally {
         URL.revokeObjectURL(url)
