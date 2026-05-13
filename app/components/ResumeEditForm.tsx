@@ -1,9 +1,9 @@
-import PersonalInfoForm from "./resumeForms/PersonalInfoForm";
+import SectionFormRender from "./resumeForms/SectionFormRender";
 
 export default function ResumeEditForm() {
     return (
         <div>
-            <PersonalInfoForm></PersonalInfoForm>
+            <SectionFormRender/>
         </div>
     );
 }
