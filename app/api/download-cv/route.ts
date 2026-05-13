@@ -16,10 +16,21 @@ export async function POST(request: Request) {
 
     const browser = await puppeteer.launch({ headless: true })
     try {
-        const page = await browser.newPage()
         const origin = new URL(request.url).origin
+        const page = await browser.newPage()
+        
         await page.goto(`${origin}/print/cv?id=${id}`, { waitUntil: 'networkidle0' })
-        const pdf = await page.pdf({ format: 'A4', printBackground: true })
+        
+        const pdf = await page.pdf({
+            format: 'A4',
+            printBackground: true,
+            margin: { 
+                top:    '15mm',
+                bottom: '15mm',
+                left:   '15mm',
+                right:  '15mm' 
+            },
+        })
 
         return new Response(new Uint8Array(pdf), {
             status: 200,
@@ -28,7 +39,15 @@ export async function POST(request: Request) {
                 'Content-Disposition': 'attachment; filename="cv.pdf"',
             },
         })
-    } finally {
+    } 
+    catch (error) {
+        console.error('Error generating PDF:', error)
+        return new Response(JSON.stringify({ error: 'Failed to generate PDF' }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' },
+        })
+    }
+    finally {
         await browser.close()
         cvPrintStore.delete(id)
     }

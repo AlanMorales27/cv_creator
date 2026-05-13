@@ -14,7 +14,7 @@ export default function DownloadCvButton() {
         })
 
         if (!response.ok) {
-            throw new Error('Failed to download CV')
+            throw new Error(response.statusText)
         }
 
         const blob = await response.blob()

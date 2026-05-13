@@ -4,7 +4,7 @@ import PersonalInfoSection from './resumeSections/PersonalInfoSection'
 
 export default function ResumePDF({ personalInfo, summary, sections }: CvShape) {
     return (
-        <article className="w-[210mm] min-h-[297mm] p-[15mm] bg-white border border-black">
+        <article className="w-[210mm] min-h-[297mm] p-[15mm] bg-white border border-black print:w-auto print:min-h-0 print:p-0 print:border-0">
             <PersonalInfoSection personalInfo={personalInfo} />
 
             <section className="flex border-t-2 border-black pt-[12px] pb-[16px] text-[14px]">
