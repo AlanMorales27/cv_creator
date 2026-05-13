@@ -18,6 +18,12 @@ export const SkillsItemSchema = z.object({
     categories:    z.array(SkillsCategorySchema),
 })
 
+export const SKILL_LEVEL_OPTIONS = SkillLevelItemSchema.shape.level.unwrap().options
+export const SKILL_DISPLAY_FORMAT_OPTIONS = SkillsItemSchema.shape.displayFormat.unwrap().options
+export const SKILL_DISPLAY_FORMAT_LABELS: Record<string, string> = {
+    comma: 'Separado por comas',
+    list:  'Lista',
+}
 /**
  * Type definitions for the skill section
  */
