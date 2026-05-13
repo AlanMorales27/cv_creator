@@ -1,6 +1,7 @@
 import { SectionShell } from './SectionShell'
 import { Description } from './Description'
 import { EducationItem } from '@/lib/schemas'
+import { formatYearMonth } from '@/lib/utils'
 
 export function EducationSection({ title, entries }: EducationItem) {
     return (
@@ -8,7 +9,7 @@ export function EducationSection({ title, entries }: EducationItem) {
             <div className="flex flex-col gap-[16px]">
                 {entries.map((entry, i) => (
                     <div key={i} className="flex">
-                        <div className="w-[25%]">{entry.startDate} – {entry.endDate}</div>
+                        <div className="w-[25%]">{formatYearMonth(entry.startDate)} – {formatYearMonth(entry.endDate)}</div>
                         <div className="w-[75%]">
                             <div className="flex justify-between font-semibold">
                                 <span>{entry.institution}</span>

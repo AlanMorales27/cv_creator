@@ -22,3 +22,9 @@ export function joinLines(value: string[] | undefined): string | undefined {
 export function splitLines(value: string | undefined): string[] | undefined {
     return value ? value.split('\n').filter(Boolean) : undefined
 }
+
+export function formatYearMonth(value: string | undefined): string {
+    if (!value) return ''
+    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value.slice(0, 7)
+    return value
+}
