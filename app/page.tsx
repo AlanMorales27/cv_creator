@@ -29,6 +29,9 @@ export default function Home() {
       }}>
         Add
       </button>
+        <button>
+          Download cv
+        </button>
       </div>
     </div>
   );
