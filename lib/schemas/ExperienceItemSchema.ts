@@ -10,6 +10,7 @@ export const ExperienceEntrySchema = z.object({
 })
 
 export const ExperienceItemSchema = z.object({
+    id:           z.number(),
     type:         z.literal('work_experience'),
     title:        z.string().optional(),
     entries:      z.array(ExperienceEntrySchema)
