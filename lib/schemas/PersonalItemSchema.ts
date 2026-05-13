@@ -7,8 +7,8 @@ export const PersonalItemSchema = z.object({
     location:     z.string(),
     postalCode:   z.string(),
     country:      z.string(),
-    phoneNumber:  z.e164().optional(),
-    email:        z.email().optional(),
+    phoneNumber:  z.string().optional(),
+    email:        z.string().optional(),
     linkedIn:     z.url().optional(),
     gitHub:       z.url().optional(),
 })
