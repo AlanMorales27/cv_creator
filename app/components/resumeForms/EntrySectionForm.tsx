@@ -16,6 +16,8 @@ import FormTextarea from "./FormTextarea"
 import { useEffect } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import SectionAccordionItem from "./SectionAccordionItem"
+import { Button } from "@/components/ui/button"
+import { NEW_EDUCATION_ENTRY, NEW_WORK_ENTRY } from "@/lib/data/entry_mock_data"
 
 type FormEntry = Omit<EducationEntry & ExperienceEntry, 'description'> & { description?: string }
 
@@ -72,7 +74,7 @@ export default function EntrySectionForm({ section }: EntrySectionFormProps) {
         defaultValues: { entries: toFormEntries(section.entries) }
     })
 
-    const { fields } = useFieldArray({ control, name: 'entries' })
+    const { fields, remove, append } = useFieldArray({ control, name: 'entries' })
 
     useEffect(() => {
         const subscription = watch((data) => {
@@ -83,13 +85,28 @@ export default function EntrySectionForm({ section }: EntrySectionFormProps) {
         })
         return () => subscription.unsubscribe()
     }, [watch])
-    
+
+    const handleAddEntry = () => {
+        const newEntry = section.type === 'education'
+            ? NEW_EDUCATION_ENTRY
+            : NEW_WORK_ENTRY
+
+        append({ ...newEntry, description: '' } as FormEntry)
+    }
+
+    const handleRemoveEntry = (index: number) => { remove(index) }
+
     return (
-        <>
+        <div className="px-2 pt-2 border-t-2">
             {fields.map((field, index) => (
                 <SectionAccordionItem
+                    key={field.id}
                     value={field.id}
-                    label={`${field[field1.name]}`}
+                    label={
+                        `${field[field1.name]}` || 
+                        `Nueva ${section.type === 'education' ? 'educación' : 'experiencia'}`
+                    }
+                    onDelete={() => handleRemoveEntry(index)}
                 >
                     <div
                         className="p-4 border rounded-md space-y-4 mb-4 last:mb-0"
@@ -131,6 +148,7 @@ export default function EntrySectionForm({ section }: EntrySectionFormProps) {
                     </div>
                 </SectionAccordionItem>
             ))}
-        </>
+            <Button type="button" onClick={handleAddEntry}> Agregar entrada </Button>
+        </div>
     )
 }

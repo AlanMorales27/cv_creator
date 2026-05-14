@@ -1,5 +1,7 @@
 {
     "recommendations": [
-        "stivo.tailwind-fold"
+        "stivo.tailwind-fold",
+        "christian-kohler.path-intellisense",
+        "formulahendry.auto-close-tag"
     ]
 }
