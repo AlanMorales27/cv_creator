@@ -1,4 +1,4 @@
-import { EducationEntry, ExperienceEntry, SectionItem } from "../schemas";
+import { EducationEntry, ExperienceEntry, SkillsCategory } from "../schemas";
 
 export const NEW_EDUCATION_ENTRY: EducationEntry= {
     degree:       "Nueva Educación",
@@ -16,4 +16,9 @@ export const NEW_WORK_ENTRY: ExperienceEntry = {
     startDate:   "",
     endDate:     "",
     description: [],
+}
+
+export const NEW_SKILL_CATEGORY: SkillsCategory = {
+    name:  "Nueva categoría",
+    items: [{ name: "" }],
 }

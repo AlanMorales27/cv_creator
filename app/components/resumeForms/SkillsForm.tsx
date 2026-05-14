@@ -13,6 +13,8 @@ import FormField from "./FormField"
 import FormSelect from "./FormSelect"
 import { useForm, useFieldArray } from "react-hook-form"
 import { useEffect } from "react"
+import { Button } from "@/components/ui/button"
+import { NEW_SKILL_CATEGORY } from "@/lib/data/entry_mock_data"
 
 type FormSkillsCategory = Omit<SkillsCategory, 'items'> & { items: SkillLevelItem[] }
 type FormSkillsitem     = Omit<Skillsitem, 'categories'> & { categories: FormSkillsCategory[] }
@@ -39,7 +41,11 @@ export default function SkillsForm({ section }: SkillsFormProps) {
         defaultValues: toFormValues(section)
     })
 
-    const { fields: categories } = useFieldArray({ control, name: "categories" })
+    const { fields: categories, append } = useFieldArray({ control, name: "categories" })
+
+    const handleAddCategory = () => {
+        append(NEW_SKILL_CATEGORY as FormSkillsCategory)
+    }
 
     useEffect(() => {
         const subscription = watch((data) => {
@@ -76,11 +82,14 @@ export default function SkillsForm({ section }: SkillsFormProps) {
                                 name={`categories.${index}.items.${itemIndex}.level`}
                                 control={control}
                                 options={SKILL_LEVEL_OPTIONS}
+                                clearable
+                                emptyLabel="Sin nivel"
                             />
                         </div>
                     ))}
                 </div>
             ))}
+            <Button type="button" onClick={handleAddCategory}> Agregar categoría </Button>
         </div>
     )
 }
