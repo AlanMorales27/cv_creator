@@ -1,5 +1,5 @@
 import useCvStore from "@/lib/store/cvStore"
-import { joinLines, splitLines } from "@/lib/utils"
+import { joinLines, splitLines } from "@/lib/helpers/utils"
 import { EducationEntry, EducationItem } from "@/lib/schemas/EducationItemSchema"
 import { ExperienceEntry, ExperienceItem } from "@/lib/schemas/ExperienceItemSchema"
 
@@ -18,13 +18,13 @@ const UNIQUE_FIELDS: Record<
     SupportedSection['type'],
     Array<{ label: string; name: keyof FormEntry }>
 > = {
-    education:       [
-        { label: 'Título',      name: 'degree' }, 
+    education: [
+        { label: 'Título', name: 'degree' },
         { label: 'Institución', name: 'institution' }]
     ,
     work_experience: [
-        { label: 'Cargo',       name: 'role' }, 
-        { label: 'Empresa',     name: 'company' }],
+        { label: 'Cargo', name: 'role' },
+        { label: 'Empresa', name: 'company' }],
 }
 
 /**
@@ -57,7 +57,7 @@ interface EntrySectionFormProps { section: SupportedSection }
 export default function EntrySectionForm({ section }: EntrySectionFormProps) {
 
     const updateSection = useCvStore((state) => state.updateSection)
-    
+
     const [field1, field2] = UNIQUE_FIELDS[section.type]
 
     const { register, watch, control } = useForm<FormValues>({
@@ -80,34 +80,34 @@ export default function EntrySectionForm({ section }: EntrySectionFormProps) {
         <>
             {fields.map((field, index) => (
                 <div key={field.id}>
-                    <FormField 
-                        label={field1.label} 
+                    <FormField
+                        label={field1.label}
                         type="text"
-                        {...register(`entries.${index}.${field1.name}`)} 
+                        {...register(`entries.${index}.${field1.name}`)}
                     />
-                    <FormField 
+                    <FormField
                         label={field2.label}
                         type="text"
-                        {...register(`entries.${index}.${field2.name}`)} 
+                        {...register(`entries.${index}.${field2.name}`)}
                     />
-                    <FormField 
+                    <FormField
                         label="Ubicación"
                         type="text"
-                        {...register(`entries.${index}.location`)} 
+                        {...register(`entries.${index}.location`)}
                     />
-                    <FormField 
+                    <FormField
                         label="Fecha de inicio"
                         type="date"
-                        {...register(`entries.${index}.startDate`)} 
+                        {...register(`entries.${index}.startDate`)}
                     />
-                    <FormField 
+                    <FormField
                         label="Fecha de fin"
                         type="date"
-                        {...register(`entries.${index}.endDate`)} 
+                        {...register(`entries.${index}.endDate`)}
                     />
-                    <FormTextarea 
+                    <FormTextarea
                         label="Descripción"
-                        {...register(`entries.${index}.description`)} 
+                        {...register(`entries.${index}.description`)}
                     />
                 </div>
             ))}
