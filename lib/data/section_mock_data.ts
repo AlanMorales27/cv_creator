@@ -1,8 +1,8 @@
 import { SectionItem } from "@/lib/schemas";
 import { nanoid } from "nanoid";
 
-export const WORK_EXPERIENCE_MOCK: SectionItem = {
-    id: nanoid(),
+export const buildWorkExperienceMock = (): SectionItem => ({
+    id: nanoid(10),
     type: "work_experience",
     title: "Work Experience",
     entries: [
@@ -21,7 +21,7 @@ export const WORK_EXPERIENCE_MOCK: SectionItem = {
             ]
         }
     ]
-}
+})
 
 const EDUCATION_MOCK: SectionItem = {
     id: nanoid(),

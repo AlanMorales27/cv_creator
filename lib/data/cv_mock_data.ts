@@ -1,4 +1,3 @@
-import { nanoid } from "nanoid";
 import { CvShape } from "../schemas";
 
 export const CvData: CvShape = {
@@ -17,7 +16,7 @@ export const CvData: CvShape = {
     summary: "Fullstack Developer con más de 2 años de experiencia construyendo aplicaciones móviles y empresariales con Angular y React Native/Flutter, integrando capacidades de Inteligencia Artificial y LLMs en flujos de usuario reales. Experiencia entregando productos escalables en producción, colaborando con equipos multidisciplinarios bajo metodologías ágiles. Manejo de principios UX/UI en entornos mobile, Git, Docker y servicios cloud. Aprendo rápido y trabajo efectivamente tanto de forma autónoma como en equipo.",
     sections: [
         {
-            id: nanoid(),
+            id: "1",
             type: "work_experience",
             title: "EXPERIENCIA LABORAL",
             entries: [
@@ -62,7 +61,7 @@ export const CvData: CvShape = {
             ]
         },
         {
-            id: nanoid(),
+            id: "2",
             type: "work_experience",
             title: "EXPERIENCIA EDUCACIONAL",
             entries: [
@@ -82,7 +81,7 @@ export const CvData: CvShape = {
             ]
         },
         {
-            id: nanoid(),
+            id: "3",
             type: "education",
             title: "EDUCACIÓN",
             entries: [
@@ -120,7 +119,7 @@ export const CvData: CvShape = {
             ]
         },
         {
-            id: nanoid(),
+            id: "4",
             type: "skills",
             title: "HABILIDADES TÉCNICAS",
             displayFormat: "comma",
@@ -161,7 +160,7 @@ export const CvData: CvShape = {
             ]
         },
         {
-            id: nanoid(),
+            id: "5",
             type: "skills",
             title: "HABILIDADES BLANDAS",
             displayFormat: "list",
@@ -178,7 +177,7 @@ export const CvData: CvShape = {
 
         },
         {
-            id: nanoid(),
+            id: "6",
             type: "skills",
             title: "IDIOMAS",
             displayFormat: "list",
