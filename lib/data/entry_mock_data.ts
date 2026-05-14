@@ -1,7 +1,7 @@
 import { EducationEntry, ExperienceEntry, SectionItem } from "../schemas";
 
 export const NEW_EDUCATION_ENTRY: EducationEntry= {
-    degree:       "",
+    degree:       "Nueva Educación",
     institution:  "",
     location:     "",
     startDate:    "",
@@ -10,7 +10,7 @@ export const NEW_EDUCATION_ENTRY: EducationEntry= {
 }
 
 export const NEW_WORK_ENTRY: ExperienceEntry = {
-    role:        "",
+    role:        "Nuevo Cargo",
     company:     "",
     location:    "",
     startDate:   "",

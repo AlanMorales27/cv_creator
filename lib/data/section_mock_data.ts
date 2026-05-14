@@ -23,8 +23,8 @@ export const buildWorkExperienceMock = (): SectionItem => ({
     ]
 })
 
-const EDUCATION_MOCK: SectionItem = {
-    id: nanoid(),
+export const buildEducationMock = (): SectionItem => ({
+    id: nanoid(10),
     type: "education",
     title: "Education",
     entries: [
@@ -37,30 +37,20 @@ const EDUCATION_MOCK: SectionItem = {
             description: ["GPA: 3.9", "Relevant Coursework: Algorithms, Data Structures, Machine Learning"]
         }
     ]
-}
+})
 
-const PROJECTS_MOCK = {
-    type: "projects",
-    title: "Projects",
-    entries: [
+export const buildSkillsMock = (): SectionItem => ({
+    id: nanoid(10),
+    type: "skills",
+    title: "Skills",
+    displayFormat: "list",
+    categories: [
         {
-            name: "Personal Portfolio Website",
-            link: "https://github.com/johndoe/portfolio",
-            description: ["Developed a personal portfolio website using React and Node.js", "Implemented a responsive design with modern UI/UX principles", "Integrated with GitHub API to display latest projects and contributions"]
+            name: "Lenguajes",
+            items: [
+                { name: "TypeScript", level: "Avanzado" },
+                { name: "Python", level: "Intermedio" }
+            ]
         }
     ]
-}
-
-const CERTIFICATIONS_MOCK = {
-    type: "certifications",
-    title: "Certifications",
-    entries: [
-        {
-            name: "Certified Kubernetes Administrator (CKA)",
-            issuingOrganization: "Cloud Native Computing Foundation",
-            dateObtained: "2024-06-01",
-            link: "https://www.credly.com/badges/d1e2c3b4-a5b6-c7d8-e9f0-1234567890ab",
-            description: ["Validated expertise in Kubernetes installation, configuration, and management", "Demonstrated practical skills in container orchestration and cluster administration"]
-        }
-    ]
-}
+})
