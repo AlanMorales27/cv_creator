@@ -1,3 +1,5 @@
+'use client'
+
 import useCvStore from "@/lib/store/cvStore"
 
 import FormTextarea from "./FormTextarea"

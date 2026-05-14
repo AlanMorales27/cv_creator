@@ -1,3 +1,5 @@
+'use client'
+
 import {
     SKILL_DISPLAY_FORMAT_LABELS,
     SKILL_DISPLAY_FORMAT_OPTIONS,

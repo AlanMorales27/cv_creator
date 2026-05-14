@@ -1,3 +1,5 @@
+'use client'
+
 import useCvStore from "@/lib/store/cvStore"
 import EntrySectionForm from "./EntrySectionForm"
 import SkillsForm from "./SkillsForm"

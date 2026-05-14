@@ -1,3 +1,5 @@
+'use client'
+
 import useCvStore from "@/lib/store/cvStore"
 import { joinLines, splitLines } from "@/lib/helpers/utils"
 import { EducationEntry, EducationItem } from "@/lib/schemas/EducationItemSchema"
