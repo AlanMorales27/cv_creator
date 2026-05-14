@@ -21,6 +21,7 @@ export default function SectionAccordionItem(
                 {label}
                 {onDelete && (
                     <Trash
+                        className="h-5 w-5 cursor-pointer"
                         onClick={(e) => {
                             e.stopPropagation()
                             onDelete()
