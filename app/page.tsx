@@ -7,9 +7,8 @@ import DownloadCvButton from "./components/DownloadCvButton";
 
 export default function Home() {
   return (
-    <div className="flex flex-row gap-4">
-      <ResumePDFClient />
-      <div className="flex flex-col gap-2 w-[40%]">
+    <div className="flex flex-row gap-4 h-screen">
+      <div className="flex flex-col gap-2 w-[55%] overflow-y-auto">
         <ResumeEditForm></ResumeEditForm>
         <button onClick={() => {
         const state = useCvStore.getState();
@@ -32,6 +31,9 @@ export default function Home() {
         Add
       </button>
       <DownloadCvButton></DownloadCvButton>
+      </div>
+      <div className="flex-1 overflow-y-auto">
+        <ResumePDFClient />
       </div>
     </div>
   );

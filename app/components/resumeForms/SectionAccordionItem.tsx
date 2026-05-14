@@ -18,16 +18,19 @@ export default function SectionAccordionItem(
     return (
         <AccordionItem value={value}>
             <AccordionTrigger>
-                {label}
-                {onDelete && (
-                    <Trash
-                        className="h-5 w-5 cursor-pointer"
-                        onClick={(e) => {
-                            e.stopPropagation()
-                            onDelete()
-                        }}
-                    />
-                )}
+                <div className="flex justify-between w-full mr-3">
+                    {label}
+                    {onDelete && (
+                        <Trash
+                            className="h-5 w-5 cursor-pointer"
+                            color="#666666"
+                            onClick={(e) => {
+                                e.stopPropagation()
+                                onDelete()
+                            }}
+                        />
+                    )}
+                </div>
             </AccordionTrigger>
             <AccordionContent>{children}</AccordionContent>
         </AccordionItem>

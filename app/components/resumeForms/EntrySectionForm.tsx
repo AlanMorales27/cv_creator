@@ -79,32 +79,39 @@ export default function EntrySectionForm({ section }: EntrySectionFormProps) {
     return (
         <>
             {fields.map((field, index) => (
-                <div key={field.id}>
+                <div
+                    className="p-4 border rounded-md space-y-4 mb-4 last:mb-0"
+                    key={field.id}
+                >
                     <FormField
                         label={field1.label}
                         type="text"
                         {...register(`entries.${index}.${field1.name}`)}
                     />
-                    <FormField
-                        label={field2.label}
-                        type="text"
-                        {...register(`entries.${index}.${field2.name}`)}
-                    />
-                    <FormField
-                        label="Ubicación"
-                        type="text"
-                        {...register(`entries.${index}.location`)}
-                    />
-                    <FormField
-                        label="Fecha de inicio"
-                        type="date"
-                        {...register(`entries.${index}.startDate`)}
-                    />
-                    <FormField
-                        label="Fecha de fin"
-                        type="date"
-                        {...register(`entries.${index}.endDate`)}
-                    />
+                    <div className="flex flex-row gap-4">
+                        <FormField
+                            label={field2.label}
+                            type="text"
+                            {...register(`entries.${index}.${field2.name}`)}
+                        />
+                        <FormField
+                            label="Ubicación"
+                            type="text"
+                            {...register(`entries.${index}.location`)}
+                        />
+                    </div>
+                    <div className="flex flex-row gap-4">
+                        <FormField
+                            label="Fecha de inicio"
+                            type="date"
+                            {...register(`entries.${index}.startDate`)}
+                        />
+                        <FormField
+                            label="Fecha de fin"
+                            type="date"
+                            {...register(`entries.${index}.endDate`)}
+                        />
+                    </div>
                     <FormTextarea
                         label="Descripción"
                         {...register(`entries.${index}.description`)}

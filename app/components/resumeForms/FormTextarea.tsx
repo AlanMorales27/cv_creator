@@ -19,7 +19,10 @@ export default function FormTextarea(
     return (
         <Field>
             <FieldLabel>{label}</FieldLabel>
-            <Textarea {...textareaProps} />
+            <Textarea 
+                rows={10}
+                {...textareaProps}
+            />
             {description && <FieldDescription>{description}</FieldDescription>}
         </Field>
     )
