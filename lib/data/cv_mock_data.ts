@@ -10,7 +10,7 @@ export const CvData: CvShape = {
         country: "Colombia",
         phoneNumber: "+57 3043658798",
         email: "alanmoralesg47@gmail.com",
-        linkedIn: "www.linkedin.com/in/alanmoralesguevara",
+        linkedIn: "https://www.linkedin.com/in/alanmoralesguevara",
         gitHub: "https://github.com/alanmoralesg47"
     },
     summary: "Fullstack Developer con más de 2 años de experiencia construyendo aplicaciones móviles y empresariales con Angular y React Native/Flutter, integrando capacidades de Inteligencia Artificial y LLMs en flujos de usuario reales. Experiencia entregando productos escalables en producción, colaborando con equipos multidisciplinarios bajo metodologías ágiles. Manejo de principios UX/UI en entornos mobile, Git, Docker y servicios cloud. Aprendo rápido y trabajo efectivamente tanto de forma autónoma como en equipo.",
@@ -24,8 +24,8 @@ export const CvData: CvShape = {
                     role: "Frontend | Fullstack Developer",
                     company: "Geotecnia Y Cimentaciones S.A.S",
                     location: "Bogotá, Colombia",
-                    startDate: "03/2025",
-                    endDate: "05/2026",
+                    startDate: "2026-05-29",
+                    endDate: "2026-05-29",
                     description: [
                         "Contribuí a la integración de modelos de Machine Learning y LLMs directamente dentro del flujo de usuario de la aplicación, mejorando la experiencia técnica con capacidades de IA.",
                         "Orquesté el mantenimiento y evolución de Geocore (aplicación técnica de gestión de pavimentos) con Angular y Django, entregando más de 40 funcionalidades sin tiempos de inactividad.",
@@ -36,8 +36,8 @@ export const CvData: CvShape = {
                     role: "Freelance Frontend Fullstack Developer",
                     company: "Independiente",
                     location: "Bogotá, Colombia",
-                    startDate: "06/2024",
-                    endDate: "Presente",
+                    startDate: "2026-05-29",
+                    endDate: "2026-05-29",
                     description: [
                         "Entregué proyectos Fullstack completos (web y móvil) de forma autónoma, desde el levantamiento de requerimientos hasta el despliegue en producción.",
                         "Desarrollé scripts de automatización con Python para optimizar tareas repetitivas en proyectos de clientes: procesamiento de archivos, integración de APIs y generación de reportes automáticos.",
@@ -49,8 +49,8 @@ export const CvData: CvShape = {
                     role: "Practicante en Desarrollo y Análisis de datos",
                     company: "Wingo Colombia",
                     location: "Bogotá, Colombia",
-                    startDate: "08/2024",
-                    endDate: "02/2025",
+                    startDate: "2026-05-29",
+                    endDate: "2026-05-29",
                     description: [
                         "Diseñé y desarrollé plataformas interactivas para el entrenamiento del equipo ACDM utilizando React, Node.js, SQL Server y servicios en Google Cloud.",
                         "Desarrollé dashboards en Google Looker y prototipos con Power BI que optimizaban el monitoreo de indicadores clave del negocio y facilitaban la toma de decisiones tácticas.",
@@ -69,8 +69,8 @@ export const CvData: CvShape = {
                     role: "Semillero de Desarrollo",
                     company: "Universidad San Buenaventura",
                     location: "Bogotá, Colombia",
-                    startDate: "01/2022",
-                    endDate: "02/2025",
+                    startDate: "2022-01-01",
+                    endDate: "2025-01-01",
                     description: [
                         "Desarrollé soluciones web para clientes externos (personas naturales, comercios y startups) trabajando en equipo bajo la guía de un profesor.",
                         "Implementé proyectos con React, Next.js, WordPress/CMS y bases de datos SQL/NoSQL, complementados con diseño de interfaces en Figma.",
@@ -89,8 +89,8 @@ export const CvData: CvShape = {
                     institution: "Universidad San Buenaventura",
                     degree: "Profesional, Ingeniería Multimedia",
                     location: "Bogotá, Colombia",
-                    startDate: "01/2020",
-                    endDate: "03/2026",
+                    startDate: "2020-01-01",
+                    endDate: "2026-03-01",
                     description: [
                         "Ingeniero Multimedia titulado. Durante mi carrera elegí enfocarme en desarrollo web Frontend, motivado por una pasión genuina por la programación que me llevó a participar en múltiples semilleros de investigación en Frontend, realidad virtual/aumentada y computación gráfica. Esta dedicación se reflejó en un reconocimiento académico y en un proyecto de grado destacado, consolidando una base técnica sólida y una mentalidad orientada a la mejora continua."
                     ]
@@ -99,8 +99,8 @@ export const CvData: CvShape = {
                     institution: "Alura Latam",
                     degree: "Oracle Next Education Frontend Specialist",
                     location: "Virtual",
-                    startDate: "08/2022",
-                    endDate: "12/2022",
+                    startDate: "2022-08-01",
+                    endDate: "2022-12-01",
                     description: [
                         "Programa de formación intensiva en desarrollo Frontend impartido por Oracle y Alura, completado y certificado. Profundicé en HTML, CSS, JavaScript y React, aplicando los conocimientos en proyectos prácticos bajo metodologías ágiles y dinámicas de trabajo en equipo. La formación reforzó mis fundamentos técnicos y mi capacidad para colaborar en entornos de desarrollo profesionales."
                     ]
@@ -109,8 +109,8 @@ export const CvData: CvShape = {
                     institution: "Oracle Academy",
                     degree: "Java Fundamentals",
                     location: "Virtual",
-                    startDate: "01/2022",
-                    endDate: "07/2022",
+                    startDate: "2026-05-29",
+                    endDate: "2026-05-29",
                     description: [
                         "Adquirí dominio sobre la sintaxis y fundamentos de Java, desde versiones Legacy como Java 8 hasta cambios en versiones actuales como Java 21.",
                         "Dominio en Programación Orientada a Objetos (POO), estructuras de datos y colecciones y manejo de excepciones."

@@ -31,13 +31,22 @@ export default function PersonalInfoSection({ personalInfo }: { personalInfo: Pe
 
     return (
         <div className='flex relative min-h-[96px] mb-[16px]'>
-            <div className=' w-[25%]'>
-                <img
-                    className='aspect-square object-cover absolute left-0 top-0 w-[96px] rounded-[6px]'
-                    src={personalInfo.photo}
-                    alt="Profile Photo" />
-            </div>
-            <div className='w-[75%] min-w-0'>
+            {personalInfo.photo && personalInfo.photo.length > 0 && (
+                <div className=' w-[25%]'>
+                    <img
+                        className='aspect-square object-cover absolute left-0 top-0 w-[96px] rounded-[6px]'
+                        src={personalInfo.photo}
+                        alt="Profile Photo" />
+                </div>
+            )}
+            <div className={
+                `
+                    ${personalInfo.photo && personalInfo.photo.length > 0
+                        ? 'w-[75%] min-w-0'
+                        : 'w-full min-w-0'
+                    }
+                `
+            }>
                 <h1 className={`text-[5.29mm] [font-family:Arial,sans-serif] font-semibold text-black mb-0 tracking-wide ${align}`}>
                     {personalInfo.firstNames} {personalInfo.lastNames}
                 </h1>

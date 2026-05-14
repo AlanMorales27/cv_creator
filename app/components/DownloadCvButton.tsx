@@ -13,25 +13,31 @@ export default function DownloadCvButton() {
 
         const { personalInfo, summary, sections } = useCvStore.getState()
 
-        const response = await fetch('/api/download-cv', 
-        {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ personalInfo, summary, sections })
-        })
-        .finally(() => setIsLoading(false))
+        try{
 
-        if (!response.ok) {
-            throw new Error(response.statusText)
+            const response = await fetch('/api/download-cv', 
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ personalInfo, summary, sections })
+            })
+            .catch((error) => { throw new Error("Error al generar el CV: " + error)})
+    
+            if (!response.ok) { throw new Error(response.statusText) }
+            
+            const blob = await response.blob()
+            const url  = URL.createObjectURL(blob)
+            const a    = document.createElement('a')
+            a.href     = url
+            a.download = 'cv.pdf'
+            a.click()
+            URL.revokeObjectURL(url)
+
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setIsLoading(false)
         }
-
-        const blob = await response.blob()
-        const url  = URL.createObjectURL(blob)
-        const a    = document.createElement('a')
-        a.href     = url
-        a.download = 'cv.pdf'
-        a.click()
-        URL.revokeObjectURL(url)
     }
 
     return <Button onClick={downloadCv} disabled={isLoading}>
