@@ -6,9 +6,9 @@ import { persist } from 'zustand/middleware'
 type CvStoreActions = {
     updatePersonalInfo: (info: PersonalItem) => void,
     updateSummary: (summary: string) => void,
-    updateSection: (id: number, data: SectionItem) => void,
+    updateSection: (id: string, data: SectionItem) => void,
     addSection: (section: SectionItem) => void,
-    deleteSection: (id: number) => void,
+    deleteSection: (id: string) => void,
 }
 
 type CvStoreState = CvShape & CvStoreActions
@@ -23,7 +23,7 @@ const useCvStore = create<CvStoreState>()(
         
         updateSummary: (summary: string) => set({ summary }),
 
-        updateSection: (id: number, data: SectionItem) => set(state => ({
+        updateSection: (id: string, data: SectionItem) => set(state => ({
             sections: state.sections.map(s => s.id === id ? data : s)
         })),
 
@@ -31,7 +31,7 @@ const useCvStore = create<CvStoreState>()(
             sections: [...state.sections, section]
         })),
 
-        deleteSection: (id: number) => set(state => ({
+        deleteSection: (id: string) => set(state => ({
             sections: state.sections.filter(s => s.id !== id)
         })),
 

@@ -10,7 +10,7 @@ export const EducationEntrySchema = z.object({
 })
 
 export const EducationItemSchema = z.object({
-    id:           z.number(),
+    id:           z.string(),
     type:         z.literal('education'),
     title:        z.string().optional(),
     entries:      z.array(EducationEntrySchema)
