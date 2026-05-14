@@ -1,18 +1,14 @@
 import { randomUUID } from 'node:crypto'
 import puppeteer from 'puppeteer'
-import { CvShapeSchema } from '@/lib/schemas'
 import { cvPrintStore } from '@/lib/print/cvPrintStore'
 
 export const runtime = 'nodejs'
 
 export async function POST(request: Request) {
-    const parsed = CvShapeSchema.safeParse(await request.json())
-    if (!parsed.success) {
-        return Response.json({ error: parsed.error.issues }, { status: 400 })
-    }
+    const data = await request.json()
 
     const id = randomUUID()
-    cvPrintStore.set(id, parsed.data)
+    cvPrintStore.set(id, data)
 
     const browser = await puppeteer.launch({
         headless: true,
