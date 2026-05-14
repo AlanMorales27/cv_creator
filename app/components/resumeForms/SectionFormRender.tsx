@@ -20,6 +20,8 @@ export default function SectionFormRender() {
 
     const deleteSection = useCvStore((state) => state.deleteSection)
 
+    const updateSection = useCvStore((state) => state.updateSection)
+
     return (
         <Accordion multiple className="w-full">
             <SectionAccordionItem
@@ -58,6 +60,9 @@ export default function SectionFormRender() {
                         value={String(section.id)}
                         label={label}
                         onDelete={() => deleteSection(section.id)}
+                        onLabelChange={(newLabel) =>
+                            updateSection(section.id, { ...section, title: newLabel })
+                        }
                     >
                         {form}
                     </SectionAccordionItem>
