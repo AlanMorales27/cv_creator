@@ -2,14 +2,20 @@
 
 import useCvStore from "@/lib/store/cvStore"
 import { joinLines, splitLines } from "@/lib/helpers/utils"
-import { EducationEntry, EducationItem } from "@/lib/schemas/EducationItemSchema"
-import { ExperienceEntry, ExperienceItem } from "@/lib/schemas/ExperienceItemSchema"
+
+import { 
+    EducationEntry, 
+    EducationItem, 
+    ExperienceEntry, 
+    ExperienceItem 
+} from "@/lib/schemas"
 
 import FormField from "./FormField"
 import FormTextarea from "./FormTextarea"
 
 import { useEffect } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
+import SectionAccordionItem from "./SectionAccordionItem"
 
 type FormEntry = Omit<EducationEntry & ExperienceEntry, 'description'> & { description?: string }
 
@@ -77,48 +83,53 @@ export default function EntrySectionForm({ section }: EntrySectionFormProps) {
         })
         return () => subscription.unsubscribe()
     }, [watch])
-
+    
     return (
         <>
             {fields.map((field, index) => (
-                <div
-                    className="p-4 border rounded-md space-y-4 mb-4 last:mb-0"
-                    key={field.id}
+                <SectionAccordionItem
+                    value={field.id}
+                    label={`${field[field1.name]}`}
                 >
-                    <FormField
-                        label={field1.label}
-                        type="text"
-                        {...register(`entries.${index}.${field1.name}`)}
-                    />
-                    <div className="flex flex-row gap-4">
+                    <div
+                        className="p-4 border rounded-md space-y-4 mb-4 last:mb-0"
+                        key={field.id}
+                    >
                         <FormField
-                            label={field2.label}
+                            label={field1.label}
                             type="text"
-                            {...register(`entries.${index}.${field2.name}`)}
+                            {...register(`entries.${index}.${field1.name}`)}
                         />
-                        <FormField
-                            label="Ubicación"
-                            type="text"
-                            {...register(`entries.${index}.location`)}
+                        <div className="flex flex-row gap-4">
+                            <FormField
+                                label={field2.label}
+                                type="text"
+                                {...register(`entries.${index}.${field2.name}`)}
+                            />
+                            <FormField
+                                label="Ubicación"
+                                type="text"
+                                {...register(`entries.${index}.location`)}
+                            />
+                        </div>
+                        <div className="flex flex-row gap-4">
+                            <FormField
+                                label="Fecha de inicio"
+                                type="date"
+                                {...register(`entries.${index}.startDate`)}
+                            />
+                            <FormField
+                                label="Fecha de fin"
+                                type="date"
+                                {...register(`entries.${index}.endDate`)}
+                            />
+                        </div>
+                        <FormTextarea
+                            label="Descripción"
+                            {...register(`entries.${index}.description`)}
                         />
                     </div>
-                    <div className="flex flex-row gap-4">
-                        <FormField
-                            label="Fecha de inicio"
-                            type="date"
-                            {...register(`entries.${index}.startDate`)}
-                        />
-                        <FormField
-                            label="Fecha de fin"
-                            type="date"
-                            {...register(`entries.${index}.endDate`)}
-                        />
-                    </div>
-                    <FormTextarea
-                        label="Descripción"
-                        {...register(`entries.${index}.description`)}
-                    />
-                </div>
+                </SectionAccordionItem>
             ))}
         </>
     )
