@@ -1,13 +1,23 @@
+'use client'
+
 import useCvStore from "@/lib/store/cvStore"
 import { joinLines, splitLines } from "@/lib/helpers/utils"
-import { EducationEntry, EducationItem } from "@/lib/schemas/EducationItemSchema"
-import { ExperienceEntry, ExperienceItem } from "@/lib/schemas/ExperienceItemSchema"
+
+import { 
+    EducationEntry, 
+    EducationItem, 
+    ExperienceEntry, 
+    ExperienceItem 
+} from "@/lib/schemas"
 
 import FormField from "./FormField"
 import FormTextarea from "./FormTextarea"
 
 import { useEffect } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
+import SectionAccordionItem from "./SectionAccordionItem"
+import { Button } from "@/components/ui/button"
+import { NEW_EDUCATION_ENTRY, NEW_WORK_ENTRY } from "@/lib/data/entry_mock_data"
 
 type FormEntry = Omit<EducationEntry & ExperienceEntry, 'description'> & { description?: string }
 
@@ -64,7 +74,7 @@ export default function EntrySectionForm({ section }: EntrySectionFormProps) {
         defaultValues: { entries: toFormEntries(section.entries) }
     })
 
-    const { fields } = useFieldArray({ control, name: 'entries' })
+    const { fields, remove, append } = useFieldArray({ control, name: 'entries' })
 
     useEffect(() => {
         const subscription = watch((data) => {
@@ -76,41 +86,69 @@ export default function EntrySectionForm({ section }: EntrySectionFormProps) {
         return () => subscription.unsubscribe()
     }, [watch])
 
+    const handleAddEntry = () => {
+        const newEntry = section.type === 'education'
+            ? NEW_EDUCATION_ENTRY
+            : NEW_WORK_ENTRY
+
+        append({ ...newEntry, description: '' } as FormEntry)
+    }
+
+    const handleRemoveEntry = (index: number) => { remove(index) }
+
     return (
-        <>
+        <div className="px-2 pt-2 border-t-2">
             {fields.map((field, index) => (
-                <div key={field.id}>
-                    <FormField
-                        label={field1.label}
-                        type="text"
-                        {...register(`entries.${index}.${field1.name}`)}
-                    />
-                    <FormField
-                        label={field2.label}
-                        type="text"
-                        {...register(`entries.${index}.${field2.name}`)}
-                    />
-                    <FormField
-                        label="Ubicación"
-                        type="text"
-                        {...register(`entries.${index}.location`)}
-                    />
-                    <FormField
-                        label="Fecha de inicio"
-                        type="date"
-                        {...register(`entries.${index}.startDate`)}
-                    />
-                    <FormField
-                        label="Fecha de fin"
-                        type="date"
-                        {...register(`entries.${index}.endDate`)}
-                    />
-                    <FormTextarea
-                        label="Descripción"
-                        {...register(`entries.${index}.description`)}
-                    />
-                </div>
+                <SectionAccordionItem
+                    key={field.id}
+                    value={field.id}
+                    label={
+                        `${field[field1.name]}` || 
+                        `Nueva ${section.type === 'education' ? 'educación' : 'experiencia'}`
+                    }
+                    onDelete={() => handleRemoveEntry(index)}
+                >
+                    <div
+                        className="p-4 border rounded-md space-y-4 mb-4 last:mb-0"
+                        key={field.id}
+                    >
+                        <FormField
+                            label={field1.label}
+                            type="text"
+                            {...register(`entries.${index}.${field1.name}`)}
+                        />
+                        <div className="flex flex-row gap-4">
+                            <FormField
+                                label={field2.label}
+                                type="text"
+                                {...register(`entries.${index}.${field2.name}`)}
+                            />
+                            <FormField
+                                label="Ubicación"
+                                type="text"
+                                {...register(`entries.${index}.location`)}
+                            />
+                        </div>
+                        <div className="flex flex-row gap-4">
+                            <FormField
+                                label="Fecha de inicio"
+                                type="date"
+                                {...register(`entries.${index}.startDate`)}
+                            />
+                            <FormField
+                                label="Fecha de fin"
+                                type="date"
+                                {...register(`entries.${index}.endDate`)}
+                            />
+                        </div>
+                        <FormTextarea
+                            label="Descripción"
+                            {...register(`entries.${index}.description`)}
+                        />
+                    </div>
+                </SectionAccordionItem>
             ))}
-        </>
+            <Button type="button" onClick={handleAddEntry}> Agregar entrada </Button>
+        </div>
     )
 }

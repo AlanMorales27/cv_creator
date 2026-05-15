@@ -1,14 +1,12 @@
+'use client'
+
 import useCvStore from "@/lib/store/cvStore"
 import EntrySectionForm from "./EntrySectionForm"
 import SkillsForm from "./SkillsForm"
 import PersonalInfoForm from "./PersonalInfoForm"
 import SummaryForm from "./SummaryForm"
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "@/components/ui/accordion"
+import SectionAccordionItem from "./SectionAccordionItem"
+import { Accordion } from "@/components/ui/accordion"
 
 const sectionLabels: Record<string, string> = {
     work_experience: 'Experiencia laboral',
@@ -20,23 +18,27 @@ export default function SectionFormRender() {
 
     const sections = useCvStore((state) => state.sections)
 
+    const deleteSection = useCvStore((state) => state.deleteSection)
+
+    const updateSection = useCvStore((state) => state.updateSection)
+
     return (
         <Accordion multiple className="w-full">
-            <AccordionItem value="personal_info">
-                <AccordionTrigger>INFORMACIÓN PERSONAL</AccordionTrigger>
-                <AccordionContent>
-                    <PersonalInfoForm />
-                </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="summary">
-                <AccordionTrigger>RESUMEN</AccordionTrigger>
-                <AccordionContent>
-                    <SummaryForm />
-                </AccordionContent>
-            </AccordionItem>
+            <SectionAccordionItem
+                value="personal_info"
+                label="INFORMACIÓN PERSONAL"
+            >
+                <PersonalInfoForm />
+            </SectionAccordionItem>
+            <SectionAccordionItem
+                value="summary"
+                label="RESUMEN"
+            >
+                <SummaryForm />
+            </SectionAccordionItem>
             {sections.map((section) => {
-                const label = section.title || 
-                              sectionLabels[section.type] || 
+                const label = section.title ||
+                              sectionLabels[section.type] ||
                               section.type
 
                 let form: React.ReactNode = null
@@ -53,10 +55,17 @@ export default function SectionFormRender() {
                 if (!form) return null
 
                 return (
-                    <AccordionItem key={section.id} value={String(section.id)}>
-                        <AccordionTrigger>{label}</AccordionTrigger>
-                        <AccordionContent>{form}</AccordionContent>
-                    </AccordionItem>
+                    <SectionAccordionItem
+                        key={section.id}
+                        value={String(section.id)}
+                        label={label}
+                        onDelete={() => deleteSection(section.id)}
+                        onLabelChange={(newLabel) =>
+                            updateSection(section.id, { ...section, title: newLabel })
+                        }
+                    >
+                        {form}
+                    </SectionAccordionItem>
                 )
             })}
         </Accordion>
