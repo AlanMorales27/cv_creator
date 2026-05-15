@@ -10,7 +10,7 @@ import SectionAccordionItem from "./SectionAccordionItem"
 import { Accordion } from "@/components/ui/accordion"
 import { DraggableSection } from "./DraggeableSections"
 import { DndContext, DragEndEvent } from "@dnd-kit/core"
-import { SortableContext } from "@dnd-kit/sortable"
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
 
 const sectionLabels: Record<string, string> = {
     work_experience: 'Experiencia laboral',
@@ -58,7 +58,10 @@ export default function SectionFormRender() {
                 <SummaryForm />
             </SectionAccordionItem>
             <DndContext onDragEnd={handleDragEnd}>
-                <SortableContext items={sections.map(s => String(s.id))}>
+                <SortableContext
+                    items={sections.map(s => String(s.id))}
+                    strategy={verticalListSortingStrategy}
+                >
                     {sections.map((section) => {
                         const label = section.title ||
                                     sectionLabels[section.type] ||

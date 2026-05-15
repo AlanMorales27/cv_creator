@@ -18,7 +18,7 @@ export function DraggableSection(props: DraggableSectionProps) {
         listeners,
         attributes,
     } = useSortable({ id: props.value, disabled: props.disabled })
-    
+
     const style = {
         transform: CSS.Translate.toString(transform),
         transition,
