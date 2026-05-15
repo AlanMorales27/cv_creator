@@ -32,7 +32,9 @@ export default function SectionFormRender() {
 
     const handleDragEnd = (event: DragEndEvent) => {
         const { active, over } = event
+        
         if (!over || active.id === over.id) return
+
         reorderSections(String(active.id), String(over.id))
     }
 
