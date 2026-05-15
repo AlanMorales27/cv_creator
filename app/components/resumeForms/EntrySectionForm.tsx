@@ -15,9 +15,11 @@ import FormTextarea from "./FormTextarea"
 
 import { useEffect } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
-import SectionAccordionItem from "./SectionAccordionItem"
 import { Button } from "@/components/ui/button"
 import { NEW_EDUCATION_ENTRY, NEW_WORK_ENTRY } from "@/lib/data/entry_mock_data"
+import { DraggableSection } from "./DraggeableSections"
+import { DndContext, DragEndEvent } from "@dnd-kit/core"
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
 
 type FormEntry = Omit<EducationEntry & ExperienceEntry, 'description'> & { description?: string }
 
@@ -62,9 +64,12 @@ function toSchemaEntries(entries: FormEntry[]) {
     return entries.map(e => ({ ...e, description: splitLines(e.description) }))
 }
 
-interface EntrySectionFormProps { section: SupportedSection }
+interface EntrySectionFormProps {
+    section: SupportedSection
+    openValues?: string[]
+}
 
-export default function EntrySectionForm({ section }: EntrySectionFormProps) {
+export default function EntrySectionForm({ section, openValues = [] }: EntrySectionFormProps) {
 
     const updateSection = useCvStore((state) => state.updateSection)
 
@@ -74,7 +79,7 @@ export default function EntrySectionForm({ section }: EntrySectionFormProps) {
         defaultValues: { entries: toFormEntries(section.entries) }
     })
 
-    const { fields, remove, append } = useFieldArray({ control, name: 'entries' })
+    const { fields, remove, append, move } = useFieldArray({ control, name: 'entries' })
 
     useEffect(() => {
         const subscription = watch((data) => {
@@ -96,58 +101,76 @@ export default function EntrySectionForm({ section }: EntrySectionFormProps) {
 
     const handleRemoveEntry = (index: number) => { remove(index) }
 
+    const handleDragEnd = (event: DragEndEvent) => {
+        const { active, over } = event
+
+        if (!over || active.id === over.id) return
+
+        const oldIndex = fields.findIndex(f => f.id === active.id)
+        const newIndex = fields.findIndex(f => f.id === over.id)
+        move(oldIndex, newIndex)
+    }
+
     return (
         <div className="px-2 pt-2 border-t-2">
-            {fields.map((field, index) => (
-                <SectionAccordionItem
-                    key={field.id}
-                    value={field.id}
-                    label={
-                        `${field[field1.name]}` || 
-                        `Nueva ${section.type === 'education' ? 'educación' : 'experiencia'}`
-                    }
-                    onDelete={() => handleRemoveEntry(index)}
+            <DndContext onDragEnd={handleDragEnd}>
+                <SortableContext
+                    items={fields.map(f => f.id)}
+                    strategy={verticalListSortingStrategy}
                 >
-                    <div
-                        className="p-4 border rounded-md space-y-4 mb-4 last:mb-0"
-                        key={field.id}
-                    >
-                        <FormField
-                            label={field1.label}
-                            type="text"
-                            {...register(`entries.${index}.${field1.name}`)}
-                        />
-                        <div className="flex flex-row gap-4">
-                            <FormField
-                                label={field2.label}
-                                type="text"
-                                {...register(`entries.${index}.${field2.name}`)}
-                            />
-                            <FormField
-                                label="Ubicación"
-                                type="text"
-                                {...register(`entries.${index}.location`)}
-                            />
-                        </div>
-                        <div className="flex flex-row gap-4">
-                            <FormField
-                                label="Fecha de inicio"
-                                type="date"
-                                {...register(`entries.${index}.startDate`)}
-                            />
-                            <FormField
-                                label="Fecha de fin"
-                                type="date"
-                                {...register(`entries.${index}.endDate`)}
-                            />
-                        </div>
-                        <FormTextarea
-                            label="Descripción"
-                            {...register(`entries.${index}.description`)}
-                        />
-                    </div>
-                </SectionAccordionItem>
-            ))}
+                    {fields.map((field, index) => (
+                        <DraggableSection
+                            key={field.id}
+                            value={field.id}
+                            label={
+                                `${field[field1.name]}` ||
+                                `Nueva ${section.type === 'education' ? 'educación' : 'experiencia'}`
+                            }
+                            disabled={openValues.includes(field.id)}
+                            onDelete={() => handleRemoveEntry(index)}
+                        >
+                            <div
+                                className="p-4 border rounded-md space-y-4 mb-4 last:mb-0"
+                                key={field.id}
+                            >
+                                <FormField
+                                    label={field1.label}
+                                    type="text"
+                                    {...register(`entries.${index}.${field1.name}`)}
+                                />
+                                <div className="flex flex-row gap-4">
+                                    <FormField
+                                        label={field2.label}
+                                        type="text"
+                                        {...register(`entries.${index}.${field2.name}`)}
+                                    />
+                                    <FormField
+                                        label="Ubicación"
+                                        type="text"
+                                        {...register(`entries.${index}.location`)}
+                                    />
+                                </div>
+                                <div className="flex flex-row gap-4">
+                                    <FormField
+                                        label="Fecha de inicio"
+                                        type="date"
+                                        {...register(`entries.${index}.startDate`)}
+                                    />
+                                    <FormField
+                                        label="Fecha de fin"
+                                        type="date"
+                                        {...register(`entries.${index}.endDate`)}
+                                    />
+                                </div>
+                                <FormTextarea
+                                    label="Descripción"
+                                    {...register(`entries.${index}.description`)}
+                                />
+                            </div>
+                        </DraggableSection>
+                    ))}
+                </SortableContext>
+            </DndContext>
             <Button type="button" onClick={handleAddEntry}> Agregar entrada </Button>
         </div>
     )

@@ -71,7 +71,10 @@ export default function SectionFormRender() {
                         switch (section.type) {
                             case 'work_experience':
                             case 'education':
-                                form = <EntrySectionForm section={section} />
+                                form = <EntrySectionForm 
+                                    section={section} 
+                                    openValues={openValues} 
+                                    />
                                 break
                             case 'skills':
                                 form = <SkillsForm section={section} />
