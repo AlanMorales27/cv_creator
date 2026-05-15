@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from "react"
 import useCvStore from "@/lib/store/cvStore"
 import EntrySectionForm from "./EntrySectionForm"
 import SkillsForm from "./SkillsForm"
@@ -27,6 +28,8 @@ export default function SectionFormRender() {
 
     const reorderSections = useCvStore((state) => state.reorderSections)
 
+    const [openValues, setOpenValues] = useState<string[]>([])
+
     const handleDragEnd = (event: DragEndEvent) => {
         const { active, over } = event
         if (!over || active.id === over.id) return
@@ -34,7 +37,12 @@ export default function SectionFormRender() {
     }
 
     return (
-        <Accordion multiple className="w-full">
+        <Accordion
+            multiple
+            value={openValues}
+            onValueChange={setOpenValues}
+            className="w-full"
+        >
             <SectionAccordionItem
                 value="personal_info"
                 label="INFORMACIÓN PERSONAL"
@@ -67,11 +75,13 @@ export default function SectionFormRender() {
 
                         if (!form) return null
 
+                        const id = String(section.id)
                         return (
                             <DraggableSection
                                 key={section.id}
-                                value={String(section.id)}
+                                value={id}
                                 label={label}
+                                disabled={openValues.includes(id)}
                                 onDelete={() => deleteSection(section.id)}
                                 onLabelChange={(newLabel) =>
                                     updateSection(section.id, { ...section, title: newLabel })

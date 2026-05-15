@@ -80,7 +80,7 @@ export default function SectionAccordionItem(
                 </AccordionPrimitive.Header>
             ) : (
                 <AccordionTrigger>
-                    {props.dragHandle}
+                    {props.dragHandle}  
                     <div className="flex justify-between w-full mr-3">
                         <span className="uppercase tracking-wide">{props.label}</span>
                         {buttons}
