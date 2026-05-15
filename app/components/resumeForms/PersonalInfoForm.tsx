@@ -1,19 +1,22 @@
 'use client'
 
 import useCvStore from '@/lib/store/cvStore'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { PersonalItem } from '@/lib/schemas'
 import { FieldGroup } from "@/components/ui/field"
 import FormField from './FormField'
 import { photoFileToBase64 } from '@/lib/helpers/photoUtils'
+import { X } from 'lucide-react'
 
 export default function PersonalInfoForm() {
     const personalInfo        = useCvStore(state => state.personalInfo)
     const updatePersonalInfo  = useCvStore(state => state.updatePersonalInfo)
 
     const { register, watch } = useForm<PersonalItem>({ defaultValues: personalInfo })
+
+    const [photoInputKey, setPhotoInputKey] = useState(0)
 
     useEffect(() => {
         const subscription = watch((data) => {
@@ -41,18 +44,32 @@ export default function PersonalInfoForm() {
             console.error(error)
         }
     }
+
+    const handlePhotoRemove = () => {
+        updatePersonalInfo({...personalInfo, photo: undefined})
+        setPhotoInputKey(k => k + 1)
+    }
+ 
     return (
         <>
             <FieldGroup>
-                <div>
+                <div className='flex flex-row items-center gap-2'>
                     <FormField
+                        key={photoInputKey}
                         label="Upload your photo"
                         type='file'
                         accept='image/*'
-                        onChange={handlePhotoChange}
+                        {...register('photo', { onChange: handlePhotoChange })}
                     >
                     </FormField>
-                    {/* Add photo preview */}
+                    { personalInfo.photo && 
+                        <X 
+                            className="h-5 w-5 mt-6 cursor-pointer" 
+                            color='#666666'
+                            onClick={handlePhotoRemove}
+                        ></X>
+                        /* Add photo preview */
+                    }
                 </div>
                 <div className='flex flex-row gap-2'>
                     <FormField 
