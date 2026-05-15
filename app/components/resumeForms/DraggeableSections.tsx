@@ -42,3 +42,37 @@ export function DraggableSection(props: DraggableSectionProps) {
     )
 
 }
+
+type DraggableRowProps = {
+    id:        string
+    className?: string
+    children:   React.ReactNode
+}
+
+export function DraggableRow({ id, className, children }: DraggableRowProps) {
+
+    const {
+        setNodeRef,
+        transform,
+        transition,
+        listeners,
+        attributes,
+    } = useSortable({ id })
+
+    const style = {
+        transform: CSS.Translate.toString(transform),
+        transition,
+    }
+
+    return (
+        <div ref={setNodeRef} style={style} className={className}>
+            <GripVertical
+                {...attributes}
+                {...listeners}
+                className="h-5 w-5 cursor-grab shrink-0"
+                color="#666666"
+            />
+            {children}
+        </div>
+    )
+}
