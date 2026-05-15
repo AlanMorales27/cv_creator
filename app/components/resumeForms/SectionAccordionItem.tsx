@@ -13,14 +13,15 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Settings, Trash } from "lucide-react"
+import { GripVertical, Settings, Trash } from "lucide-react"
 
-type SectionAccordionItemProps = {
-    value: string
-    label: string
-    onDelete?: () => void
-    onLabelChange?: (newLabel: string) => void
-    children: React.ReactNode
+export type SectionAccordionItemProps = {
+    value:           string
+    label:           string
+    onDelete?:       () => void
+    onLabelChange?:  (newLabel: string) => void
+    dragHandle?:     React.ReactNode
+    children:        React.ReactNode
 }
 
 type LabelEditInputProps = {
@@ -31,40 +32,40 @@ type LabelEditInputProps = {
 }
 
 export default function SectionAccordionItem(
-    { value, label, onDelete, onLabelChange, children }: SectionAccordionItemProps
+    props : SectionAccordionItemProps
 ) {
     const [isEditing, setIsEditing] = useState(false)
-    const [draft, setDraft]         = useState(label)
+    const [draft, setDraft]         = useState(props.label)
 
     const commit = () => {
         const trimmed = draft.trim()
-        if (trimmed && trimmed !== label) {
-            onLabelChange?.(trimmed)
+        if (trimmed && trimmed !== props.label) {
+            props.onLabelChange?.(trimmed)
         }
         setIsEditing(false)
     }
 
     const cancel = () => {
-        setDraft(label)
+        setDraft(props.label)
         setIsEditing(false)
     }
 
     const buttons = (
         <div className="flex items-center gap-2">
-            {onLabelChange && (
+            {props.onLabelChange && (
                 <SettingButton
                     onRename={() => {
-                        setDraft(label)
+                        setDraft(props.label)
                         setIsEditing(true)
                     }}
                 />
             )}
-            {onDelete && <TrashButton onClick={onDelete} />}
+            {props.onDelete && <TrashButton onClick={props.onDelete} />}
         </div>
     )
 
     return (
-        <AccordionItem value={value}>
+        <AccordionItem value={props.value}>
             {isEditing ? (
                 <AccordionPrimitive.Header className="flex">
                     <div className="flex flex-1 justify-between py-2.5 mr-3">
@@ -79,13 +80,14 @@ export default function SectionAccordionItem(
                 </AccordionPrimitive.Header>
             ) : (
                 <AccordionTrigger>
+                    {props.dragHandle}
                     <div className="flex justify-between w-full mr-3">
-                        <span className="uppercase tracking-wide">{label}</span>
+                        <span className="uppercase tracking-wide">{props.label}</span>
                         {buttons}
                     </div>
                 </AccordionTrigger>
             )}
-            <AccordionContent>{children}</AccordionContent>
+            <AccordionContent>{props.children}</AccordionContent>
         </AccordionItem>
     )
 }
@@ -98,13 +100,11 @@ function TrashButton({ onClick }: { onClick: () => void }) {
     }
 
     return (
-        <button className="bg-transparent border-none">
-            <Trash
-                className="h-5 w-5 cursor-pointer"
-                color="#666666"
-                onClick={handleClick}
-            />
-        </button>
+        <Trash
+            className="h-5 w-5 cursor-pointer"
+            color="#666666"
+            onClick={handleClick}
+        />
     )
 }
 

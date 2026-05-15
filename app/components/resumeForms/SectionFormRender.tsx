@@ -7,6 +7,9 @@ import PersonalInfoForm from "./PersonalInfoForm"
 import SummaryForm from "./SummaryForm"
 import SectionAccordionItem from "./SectionAccordionItem"
 import { Accordion } from "@/components/ui/accordion"
+import { DraggableSection } from "./DraggeableSections"
+import { DndContext, DragEndEvent } from "@dnd-kit/core"
+import { SortableContext } from "@dnd-kit/sortable"
 
 const sectionLabels: Record<string, string> = {
     work_experience: 'Experiencia laboral',
@@ -22,6 +25,14 @@ export default function SectionFormRender() {
 
     const updateSection = useCvStore((state) => state.updateSection)
 
+    const reorderSections = useCvStore((state) => state.reorderSections)
+
+    const handleDragEnd = (event: DragEndEvent) => {
+        const { active, over } = event
+        if (!over || active.id === over.id) return
+        reorderSections(String(active.id), String(over.id))
+    }
+
     return (
         <Accordion multiple className="w-full">
             <SectionAccordionItem
@@ -36,38 +47,42 @@ export default function SectionFormRender() {
             >
                 <SummaryForm />
             </SectionAccordionItem>
-            {sections.map((section) => {
-                const label = section.title ||
-                              sectionLabels[section.type] ||
-                              section.type
+            <DndContext onDragEnd={handleDragEnd}>
+                <SortableContext items={sections.map(s => String(s.id))}>
+                    {sections.map((section) => {
+                        const label = section.title ||
+                                    sectionLabels[section.type] ||
+                                    section.type
 
-                let form: React.ReactNode = null
-                switch (section.type) {
-                    case 'work_experience':
-                    case 'education':
-                        form = <EntrySectionForm section={section} />
-                        break
-                    case 'skills':
-                        form = <SkillsForm section={section} />
-                        break
-                }
-
-                if (!form) return null
-
-                return (
-                    <SectionAccordionItem
-                        key={section.id}
-                        value={String(section.id)}
-                        label={label}
-                        onDelete={() => deleteSection(section.id)}
-                        onLabelChange={(newLabel) =>
-                            updateSection(section.id, { ...section, title: newLabel })
+                        let form: React.ReactNode = null
+                        switch (section.type) {
+                            case 'work_experience':
+                            case 'education':
+                                form = <EntrySectionForm section={section} />
+                                break
+                            case 'skills':
+                                form = <SkillsForm section={section} />
+                                break
                         }
-                    >
-                        {form}
-                    </SectionAccordionItem>
-                )
-            })}
+
+                        if (!form) return null
+
+                        return (
+                            <DraggableSection
+                                key={section.id}
+                                value={String(section.id)}
+                                label={label}
+                                onDelete={() => deleteSection(section.id)}
+                                onLabelChange={(newLabel) =>
+                                    updateSection(section.id, { ...section, title: newLabel })
+                                }
+                            >
+                                {form}
+                            </DraggableSection>
+                        )
+                    })}
+                </SortableContext>
+            </DndContext>
         </Accordion>
     )
 }
