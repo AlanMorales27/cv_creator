@@ -77,7 +77,10 @@ export default function SectionFormRender() {
                                     />
                                 break
                             case 'skills':
-                                form = <SkillsForm section={section} />
+                                form = <SkillsForm 
+                                    section={section} 
+                                    openValues={openValues} 
+                                    />
                                 break
                         }
 

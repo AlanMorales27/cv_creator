@@ -11,12 +11,14 @@ import {
 import useCvStore from "@/lib/store/cvStore"
 import FormField from "./FormField"
 import FormSelect from "./FormSelect"
-import SectionAccordionItem from "./SectionAccordionItem"
 import { Control, UseFormRegister, useForm, useFieldArray } from "react-hook-form"
 import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { NEW_SKILL_CATEGORY, NEW_SKILL_ITEM } from "@/lib/data/entry_mock_data"
 import { X } from "lucide-react"
+import { DraggableSection } from "./DraggeableSections"
+import { DndContext, DragEndEvent } from "@dnd-kit/core"
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
 
 type FormSkillsCategory = Omit<SkillsCategory, 'items'> & { items: SkillLevelItem[] }
 type FormSkillsitem     = Omit<Skillsitem, 'categories'> & { categories: FormSkillsCategory[] }
@@ -80,9 +82,12 @@ function CategoryItems({ control, register, categoryIndex }: CategoryItemsProps)
     )
 }
 
-interface SkillsFormProps { section: Skillsitem }
+interface SkillsFormProps {
+    section: Skillsitem
+    openValues?: string[]
+}
 
-export default function SkillsForm({ section }: SkillsFormProps) {
+export default function SkillsForm({ section, openValues = [] }: SkillsFormProps) {
 
     const updateSection = useCvStore((state) => state.updateSection)
 
@@ -90,7 +95,7 @@ export default function SkillsForm({ section }: SkillsFormProps) {
         defaultValues: toFormValues(section)
     })
 
-    const { fields: categories, append, remove } = useFieldArray({ control, name: "categories" })
+    const { fields: categories, append, remove, move } = useFieldArray({ control, name: "categories" })
 
     useEffect(() => {
         const subscription = watch((data) => {
@@ -105,6 +110,16 @@ export default function SkillsForm({ section }: SkillsFormProps) {
 
     const handleRemoveCategory = (index: number) => { remove(index) }
 
+    const handleDragEnd = (event: DragEndEvent) => {
+        const { active, over } = event
+
+        if (!over || active.id === over.id) return
+
+        const oldIndex = categories.findIndex(c => c.id === active.id)
+        const newIndex = categories.findIndex(c => c.id === over.id)
+        move(oldIndex, newIndex)
+    }
+
     return (
         <div className="px-2 pt-2 border-t-2 space-y-4">
             <FormSelect
@@ -114,27 +129,35 @@ export default function SkillsForm({ section }: SkillsFormProps) {
                 options={SKILL_DISPLAY_FORMAT_OPTIONS}
                 labels={SKILL_DISPLAY_FORMAT_LABELS}
             />
-            {categories.map((category, index) => (
-                <SectionAccordionItem
-                    key={category.id}
-                    value={category.id}
-                    label={category.name || "Nueva categoría"}
-                    onDelete={() => handleRemoveCategory(index)}
+            <DndContext onDragEnd={handleDragEnd}>
+                <SortableContext
+                    items={categories.map(c => c.id)}
+                    strategy={verticalListSortingStrategy}
                 >
-                    <div className="p-4 border rounded-md space-y-4 mb-4 last:mb-0">
-                        <FormField
-                            label="Nombre de la categoría"
-                            type="text"
-                            {...register(`categories.${index}.name`)}
-                        />
-                        <CategoryItems
-                            control={control}
-                            register={register}
-                            categoryIndex={index}
-                        />
-                    </div>
-                </SectionAccordionItem>
-            ))}
+                    {categories.map((category, index) => (
+                        <DraggableSection
+                            key={category.id}
+                            value={category.id}
+                            label={category.name || "Nueva categoría"}
+                            disabled={openValues.includes(category.id)}
+                            onDelete={() => handleRemoveCategory(index)}
+                        >
+                            <div className="p-4 border rounded-md space-y-4 mb-4 last:mb-0">
+                                <FormField
+                                    label="Nombre de la categoría"
+                                    type="text"
+                                    {...register(`categories.${index}.name`)}
+                                />
+                                <CategoryItems
+                                    control={control}
+                                    register={register}
+                                    categoryIndex={index}
+                                />
+                            </div>
+                        </DraggableSection>
+                    ))}
+                </SortableContext>
+            </DndContext>
             <Button type="button" onClick={handleAddCategory}> Agregar categoría </Button>
         </div>
     )
