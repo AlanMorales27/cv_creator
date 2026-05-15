@@ -16,7 +16,7 @@ import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { NEW_SKILL_CATEGORY, NEW_SKILL_ITEM } from "@/lib/data/entry_mock_data"
 import { X } from "lucide-react"
-import { DraggableSection } from "./DraggeableSections"
+import { DraggableSection, DraggableRow } from "./DraggeableSections"
 import { DndContext, DragEndEvent } from "@dnd-kit/core"
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
 
@@ -42,39 +42,60 @@ interface CategoryItemsProps {
 }
 
 function CategoryItems({ control, register, categoryIndex }: CategoryItemsProps) {
-    const { fields, append, remove } = useFieldArray({
+    const { fields, append, remove, move } = useFieldArray({
         control,
         name: `categories.${categoryIndex}.items`,
     })
 
+    const handleDragEnd = (event: DragEndEvent) => {
+        const { active, over } = event
+
+        if (!over || active.id === over.id) return
+
+        const oldIndex = fields.findIndex(f => f.id === active.id)
+        const newIndex = fields.findIndex(f => f.id === over.id)
+        move(oldIndex, newIndex)
+    }
+
     return (
         <div className="space-y-2">
-            {fields.map((item, itemIndex) => (
-                <div key={item.id} className="flex flex-row gap-2 items-end">
-                    <FormField
-                        label="Skill"
-                        type="text"
-                        {...register(`categories.${categoryIndex}.items.${itemIndex}.name`)}
-                    />
-                    <FormSelect
-                        label="Nivel"
-                        name={`categories.${categoryIndex}.items.${itemIndex}.level`}
-                        control={control}
-                        options={SKILL_LEVEL_OPTIONS}
-                        clearable
-                        emptyLabel="Sin nivel"
-                    />
-                    <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => remove(itemIndex)}
-                        aria-label="Eliminar skill"
-                    >
-                        <X />
-                    </Button>
-                </div>
-            ))}
+            <DndContext onDragEnd={handleDragEnd}>
+                <SortableContext
+                    items={fields.map(f => f.id)}
+                    strategy={verticalListSortingStrategy}
+                >
+                    {fields.map((item, itemIndex) => (
+                        <DraggableRow
+                            key={item.id}
+                            id={item.id}
+                            className="flex flex-row gap-2 items-end"
+                        >
+                            <FormField
+                                label="Skill"
+                                type="text"
+                                {...register(`categories.${categoryIndex}.items.${itemIndex}.name`)}
+                            />
+                            <FormSelect
+                                label="Nivel"
+                                name={`categories.${categoryIndex}.items.${itemIndex}.level`}
+                                control={control}
+                                options={SKILL_LEVEL_OPTIONS}
+                                clearable
+                                emptyLabel="Sin nivel"
+                            />
+                            <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => remove(itemIndex)}
+                                aria-label="Eliminar skill"
+                            >
+                                <X />
+                            </Button>
+                        </DraggableRow>
+                    ))}
+                </SortableContext>
+            </DndContext>
             <Button type="button" variant="outline" onClick={() => append(NEW_SKILL_ITEM)}>
                 Agregar skill
             </Button>
