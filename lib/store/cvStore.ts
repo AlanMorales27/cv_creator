@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { CvShape, PersonalItem, SectionItem } from '@/lib/schemas'
 import { CvData } from '../data/cv_mock_data'
 import { persist } from 'zustand/middleware'
+import { arrayMove } from '@dnd-kit/sortable'
 
 type CvStoreActions = {
     updatePersonalInfo: (info: PersonalItem) => void,
@@ -9,6 +10,7 @@ type CvStoreActions = {
     updateSection: (id: string, data: SectionItem) => void,
     addSection: (section: SectionItem) => void,
     deleteSection: (id: string) => void,
+    reorderSections: (sourceIndex: string, destinationIndex: string) => void
 }
 
 type CvStoreState = CvShape & CvStoreActions
@@ -34,6 +36,12 @@ const useCvStore = create<CvStoreState>()(
         deleteSection: (id: string) => set(state => ({
             sections: state.sections.filter(s => s.id !== id)
         })),
+
+        reorderSections: (sourceIndex: string, destinationIndex: string) => set(state => {
+            const oldIndex = state.sections.findIndex(s => s.id === sourceIndex)
+            const newIndex = state.sections.findIndex(s => s.id === destinationIndex)
+            return { sections: arrayMove(state.sections, oldIndex, newIndex) }
+        })
 
     }),
         { name: 'cv' }
