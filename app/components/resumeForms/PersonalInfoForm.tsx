@@ -39,14 +39,14 @@ export default function PersonalInfoForm() {
                 throw new Error('Base64 is empty')
             }``
 
-            updatePersonalInfo({...personalInfo, photo: base64})
+            updatePersonalInfo({...personalInfo, photo: base64, photoName: file.name})
         } catch (error) {
             console.error(error)
         }
     }
 
     const handlePhotoRemove = () => {
-        updatePersonalInfo({ ...personalInfo, photo: undefined })
+        updatePersonalInfo({ ...personalInfo, photo: undefined, photoName: undefined })
         setPhotoInputKey(k => k + 1)
     }
 
@@ -62,6 +62,7 @@ export default function PersonalInfoForm() {
                                 type='file'
                                 accept='image/*'
                                 onChange={handlePhotoChange}
+                                description={personalInfo.photoName}
                             >
                             </FormField>
                         </div>
