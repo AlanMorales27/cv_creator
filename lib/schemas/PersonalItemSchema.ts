@@ -5,6 +5,7 @@ export const PersonalItemSchema = z.object({
     lastNames:    z.string(),
     // Photo as base64 for canvas rendering
     photo:        z.string().optional(),
+    photoName:    z.string().optional(),
     title:        z.string(),
     location:     z.string(),
     postalCode:   z.string(),
