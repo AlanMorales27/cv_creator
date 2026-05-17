@@ -8,6 +8,7 @@ import { PersonalItem } from '@/lib/schemas'
 import { FieldGroup } from "@/components/ui/field"
 import FormField from './FormField'
 import { photoFileToBase64 } from '@/lib/helpers/photoUtils'
+import { Trash } from 'lucide-react'
 
 export default function PersonalInfoForm() {
     const personalInfo        = useCvStore(state => state.personalInfo)
@@ -41,17 +42,37 @@ export default function PersonalInfoForm() {
             console.error(error)
         }
     }
+
+    const handlePhotoRemove = () => {
+        updatePersonalInfo({ ...personalInfo, photo: undefined })
+    }
+
     return (
         <>
             <FieldGroup>
                 <div>
-                    <FormField
-                        label="Upload your photo"
-                        type='file'
-                        accept='image/*'
-                        onChange={handlePhotoChange}
-                    >
-                    </FormField>
+                    <div className='flex flex-row items-end gap-2'>
+                        <div className='flex-1'>
+                            <FormField
+                                label="Upload your photo"
+                                type='file'
+                                accept='image/*'
+                                onChange={handlePhotoChange}
+                            >
+                            </FormField>
+                        </div>
+                        {personalInfo.photo && (
+                            <button
+                                type='button'
+                                onClick={handlePhotoRemove}
+                                aria-label='Remove photo'
+                                className='p-2 cursor-pointer'
+                            >
+                                <Trash className='h-5 w-5' color='#666666' />
+                            </button>
+                        )}
+                    </div>
+                    
                     {/* Photo preview */}
                     { personalInfo.photo && (
                         <div className='bg-[#ecedef] relative w-full touch-none overflow-hidden overscroll-contain h-74'>
