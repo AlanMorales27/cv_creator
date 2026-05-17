@@ -1,7 +1,7 @@
 'use client'
 
 import useCvStore from '@/lib/store/cvStore'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { PersonalItem } from '@/lib/schemas'
@@ -13,6 +13,8 @@ import { Trash } from 'lucide-react'
 export default function PersonalInfoForm() {
     const personalInfo        = useCvStore(state => state.personalInfo)
     const updatePersonalInfo  = useCvStore(state => state.updatePersonalInfo)
+
+    const [photoInputKey, setPhotoInputKey] = useState(0)
 
     const { register, watch } = useForm<PersonalItem>({ defaultValues: personalInfo })
 
@@ -45,6 +47,7 @@ export default function PersonalInfoForm() {
 
     const handlePhotoRemove = () => {
         updatePersonalInfo({ ...personalInfo, photo: undefined })
+        setPhotoInputKey(k => k + 1)
     }
 
     return (
@@ -54,6 +57,7 @@ export default function PersonalInfoForm() {
                     <div className='flex flex-row items-end gap-2'>
                         <div className='flex-1'>
                             <FormField
+                                key={photoInputKey}
                                 label="Upload your photo"
                                 type='file'
                                 accept='image/*'
