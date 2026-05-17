@@ -29,7 +29,7 @@ export default function DownloadCvButton() {
             const url  = URL.createObjectURL(blob)
             const a    = document.createElement('a')
             a.href     = url
-            a.download = `resume_${personalInfo.title}_${personalInfo.firstNames}${personalInfo.lastNames}.pdf`
+            a.download = `resume_${personalInfo.title}_${personalInfo.name}.pdf`
             a.click()
             URL.revokeObjectURL(url)
 
