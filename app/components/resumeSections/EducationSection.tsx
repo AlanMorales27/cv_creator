@@ -12,10 +12,10 @@ export function EducationSection({ title, entries }: EducationItem) {
                         <div className="w-[25%]">{formatYearMonth(entry.startDate)} – {formatYearMonth(entry.endDate)}</div>
                         <div className="w-[75%]">
                             <div className="flex justify-between font-semibold">
-                                <span>{entry.institution}</span>
+                                <span>{entry.degree}</span>
                                 <span className="font-normal">{entry.location}</span>
                             </div>
-                            <div className="font-semibold mb-1">{entry.degree}</div>
+                            <div className="mb-1">{entry.institution}</div>
                             {entry.description &&
                                 <Description items={entry.description} />
                             }
