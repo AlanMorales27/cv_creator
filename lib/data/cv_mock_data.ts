@@ -2,8 +2,7 @@ import { CvShape } from "../schemas";
 
 export const CvData: CvShape = {
     personalInfo: {
-        firstNames: "Alan Styllian",
-        lastNames: "Morales Guevara",
+        name: "Alan Styllian Morales Guevara",
         title: "Fullstack Developer",
         location: "Bogotá",
         postalCode: "110131",

@@ -1,8 +1,7 @@
 import z from "zod";
 
 export const PersonalItemSchema = z.object({
-    firstNames:   z.string(),
-    lastNames:    z.string(),
+    name:         z.string(),
     // Photo as base64 for canvas rendering
     photo:        z.string().optional(),
     photoName:    z.string().optional(),

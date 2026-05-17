@@ -48,7 +48,7 @@ export default function PersonalInfoSection({ personalInfo }: { personalInfo: Pe
                 `
             }>
                 <h1 className={`text-[5.29mm] [font-family:Arial,sans-serif] font-semibold text-black mb-0 tracking-wide ${align}`}>
-                    {personalInfo.firstNames} {personalInfo.lastNames}
+                    {personalInfo.name}
                 </h1>
                 <p className={`text-[16px] ${align}`}>{personalInfo.title}</p>
                 <div className={`text-[14px] flex flex-wrap gap-x-[4px] ${align === 'text-center' ? 'justify-center' : 'justify-start'}`}>

@@ -90,25 +90,19 @@ export default function PersonalInfoForm() {
                     )}
                 </div>
                 <div className='flex flex-row gap-2'>
-                    <FormField 
-                        label="First name(s)"
+                    <FormField
+                        label="Name"
                         type="text"
-                        placeholder="John Michael"
-                        {...register('firstNames')} 
+                        placeholder="John Michael Doe Smith"
+                        {...register('name')}
                     />
-                    <FormField 
-                        label="Last name(s)"
+                    <FormField
+                        label="Professional Title"
                         type="text"
-                        placeholder="Doe Smith"
-                        {...register('lastNames')}
+                        placeholder="Software Engineer"
+                        {...register('title')}
                     />
                 </div>
-                <FormField 
-                    label="Professional Title"
-                    type="text"
-                    placeholder="Software Engineer"
-                    {...register('title')} 
-                />
                 <FormField 
                     label="Location"
                     type="text"
