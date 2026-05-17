@@ -52,7 +52,16 @@ export default function PersonalInfoForm() {
                         onChange={handlePhotoChange}
                     >
                     </FormField>
-                    {/* Add photo preview */}
+                    {/* Photo preview */}
+                    { personalInfo.photo && (
+                        <div className='bg-[#ecedef] relative w-full touch-none overflow-hidden overscroll-contain h-74'>
+                            <img
+                                className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 touch-none select-none object-cover pointer-events-none'
+                                src={personalInfo.photo}
+                                alt="Profile photo preview"
+                            />
+                        </div>
+                    )}
                 </div>
                 <div className='flex flex-row gap-2'>
                     <FormField 
