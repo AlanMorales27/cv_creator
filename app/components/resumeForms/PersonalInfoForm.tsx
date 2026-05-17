@@ -8,7 +8,8 @@ import { PersonalItem } from '@/lib/schemas'
 import { FieldGroup } from "@/components/ui/field"
 import FormField from './FormField'
 import { photoFileToBase64 } from '@/lib/helpers/photoUtils'
-import { Trash } from 'lucide-react'
+import { ArrowLeftRight, Trash } from 'lucide-react'
+import { Tooltip } from '@base-ui/react/tooltip'
 
 export default function PersonalInfoForm() {
     const personalInfo        = useCvStore(state => state.personalInfo)
@@ -20,10 +21,18 @@ export default function PersonalInfoForm() {
 
     useEffect(() => {
         const subscription = watch((data) => {
-            updatePersonalInfo(data as PersonalItem)
+            updatePersonalInfo({
+                ...useCvStore.getState().personalInfo,
+                ...data,
+            } as PersonalItem)
         })
         return () => subscription.unsubscribe()
     }, [watch])
+
+    const handleToggleRoleFirst = () => {
+        const current = useCvStore.getState().personalInfo
+        updatePersonalInfo({ ...current, roleFirst: !current.roleFirst })
+    }
     
     const handlePhotoChange = async (
         e: React.ChangeEvent<HTMLInputElement>
@@ -89,13 +98,36 @@ export default function PersonalInfoForm() {
                         </div>
                     )}
                 </div>
-                <div className='flex flex-row gap-2'>
+                <div className='flex flex-row items-end gap-2'>
                     <FormField
                         label="Name"
                         type="text"
                         placeholder="John Michael Doe Smith"
                         {...register('name')}
                     />
+                    <Tooltip.Provider>
+                        <Tooltip.Root>
+                            <Tooltip.Trigger
+                                render={
+                                    <button
+                                        type='button'
+                                        onClick={handleToggleRoleFirst}
+                                        aria-label='Switch name and title position'
+                                        className='p-2 cursor-pointer mb-1 shrink-0'
+                                    >
+                                        <ArrowLeftRight className='h-5 w-5' color='#666666' />
+                                    </button>
+                                }
+                            />
+                            <Tooltip.Portal>
+                                <Tooltip.Positioner sideOffset={6}>
+                                    <Tooltip.Popup className='rounded-md bg-neutral-800 px-2 py-1 text-xs text-white shadow'>
+                                        Switch name and title position
+                                    </Tooltip.Popup>
+                                </Tooltip.Positioner>
+                            </Tooltip.Portal>
+                        </Tooltip.Root>
+                    </Tooltip.Provider>
                     <FormField
                         label="Professional Title"
                         type="text"
